@@ -7,10 +7,10 @@ import DeletedNav from '../DeletedTab/views/DeletedNav'
 
 var routeConfig = {
   HomeNav: { screen: HomeNav },
-  ProfileNav: {screen: ProfileNav },
   CompletedNav: { screen: CompletedNav },
   NotCompletedNav: { screen: NotCompletedNav },
   DeletedNav: { screen: DeletedNav },
+  ProfileNav: {screen: ProfileNav },
 }
 
 var tabBarConfig = {

@@ -19,8 +19,8 @@ class DeletedNav extends Component {
     tabBarLabel: '',
     tabBarIcon: ({tintColor}) => (
       <Image 
-      source={require('../../../TabPhotos/home_icon.png')}
-      style={{width:30, height:30, tintColor: 'white'}}>
+      source={require('../../../TabPhotos/trash.png')}
+      style={{width:30, height:30, top: 5, tintColor: 'white'}}>
       </Image>
     )
   }

@@ -20,7 +20,7 @@ class ProfileNav extends Component {
     tabBarLabel: '',
     tabBarIcon: ({tintColor}) => (
       <Image 
-      source={require('../../../TabPhotos/home_icon.png')}
+      source={require('../../../TabPhotos/profile.png')}
       style={{width:30, height:30, tintColor: 'white'}}>
       </Image>
     )
