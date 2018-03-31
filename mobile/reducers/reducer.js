@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import addTodo from "./addTodo"
 import deleteTodo from "./deleteTodo"
+import Auth from "./authReducer"
 import TabBar from "./tabBarReducer"
 import Profile from "./profileReducer"
 import Deleted from "./deletedReducer"
@@ -11,6 +12,7 @@ import Completed from "./completedReducer"
 const reducer = combineReducers({
 	addTodo,
 	deleteTodo,
+	Auth,
 	TabBar,
 	Profile,
 	Deleted,
