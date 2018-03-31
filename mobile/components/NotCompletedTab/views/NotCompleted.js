@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: 'white'
+    backgroundColor: 'red'
   },
   title:{
     flexDirection: 'column',
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   },
   spinner:{
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   }
 });
 
@@ -57,8 +57,8 @@ class NotCompleted extends Component {
   render() {
       return (
         <View style={styles.spinnerContainer}>
-          <Text> Not Completed </Text>
           <Spinner type='FadingCircle' style={styles.spinner}/>
+          <Text> Not Completed </Text>
         </View>
       )
     }
