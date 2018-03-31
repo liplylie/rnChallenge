@@ -3,8 +3,8 @@ import TabBarNav from './TabBar/views/TabBarNav'
 import { connect } from 'react-redux'
 import { View, Text, Image, StyleSheet } from 'react-native'
 import { bindActionCreators } from 'redux'
-import Login from './Auth/Login.js'
-import * as AuthActions from '../actions/authActions.js'
+import AuthNav from './Auth/views/AuthNav.js'
+import * as AuthActions from '../actions/logActions.js'
 import Spinner from 'react-native-spinkit'
 
 class App extends Component {
@@ -25,14 +25,7 @@ class App extends Component {
   	if(!authorized) {
       return (
         <View style={styles.container}>
-        	<Text > To Do List </Text>
-          <Image 
-            style={styles.image}
-            resizeMethod='resize'
-            resizeMode='contain'
-            source={require('../TabPhotos/logo.png')} 
-          />
-          {authorizing ? <View><Text>Loading</Text><Spinner type='FadingCircle'/></View> :<Login />}
+          {authorizing ? <View><Text>Loading</Text><Spinner type='FadingCircle'/></View> :<AuthNav />}
         </View>
       )
     } else {
@@ -46,8 +39,8 @@ class App extends Component {
 
 const appState = (state) => {
   return {
-    authorized: state.Auth.authorized,
-    authorizing: state.Auth.authorizing,
+    authorized: state.Log.authorized,
+    authorizing: state.Log.authorizing,
   }
 }
 

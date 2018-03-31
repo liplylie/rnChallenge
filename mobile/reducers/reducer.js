@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import addTodo from "./addTodo"
 import deleteTodo from "./deleteTodo"
 import Auth from "./authReducer"
+import Log from "./logReducer"
 import TabBar from "./tabBarReducer"
 import Profile from "./profileReducer"
 import Deleted from "./deletedReducer"
@@ -18,7 +19,8 @@ const reducer = combineReducers({
 	Deleted,
 	NotCompleted,
 	Home,
-	Completed
+	Completed,
+	Log
 })
 
 export default reducer;

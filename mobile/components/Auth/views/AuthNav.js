@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { addNavigationHelpers } from 'react-navigation'
-import { HomeNavigator } from '../navigationConfig'
+import { AuthNavigator } from '../navigationConfig'
 import { Image } from 'react-native'
 import { connect } from 'react-redux'
 import {
@@ -14,26 +14,16 @@ const middleware = createReactNavigationReduxMiddleware(
 );
 const addListener = createReduxBoundAddListener("root");
 
-class HomeNav extends Component {
-  static navigationOptions = {
-    tabBarLabel: '',
-    tabBarIcon: ({tintColor}) => (
-      <Image 
-      source={require('../../../TabPhotos/home_icon.png')}
-      style={{width:30, height:30, top: 5, tintColor: 'white'}}>
-      </Image>
-    )
-  }
+class AuthNav extends Component {
 
   render() {
-    console.log(this.props, 'props')
-    const { homeState, dispatch } = this.props
+    const { dispatch, AuthState } = this.props
     return (
-      <HomeNavigator
+      <AuthNavigator
         navigation={
           addNavigationHelpers({
             dispatch: dispatch,
-            state: homeState,
+            state: AuthState,
             addListener
           })
         }
@@ -44,8 +34,8 @@ class HomeNav extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    homeState: state.Home
+     AuthState: state.Auth
    }
  }
 
-export default connect(mapStateToProps)(HomeNav)
+export default connect(mapStateToProps)(AuthNav)
