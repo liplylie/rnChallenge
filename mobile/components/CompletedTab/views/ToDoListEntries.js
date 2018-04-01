@@ -39,12 +39,12 @@ class ToDoList extends Component {
       <View>
         <Swipeout right={swipeoutBtns} style={styles.toDoEntry}>
           <View style={(styles.padding, styles.border)}>
-          <TouchableOpacity
-            onPress={e => this.changeStatus(todo, "not completed")}
-            style={styles.red}
-          >
-            <Text>change status</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress={e => this.changeStatus(todo, "not completed")}
+              style={styles.red}
+            >
+              <Text>change status</Text>
+            </TouchableOpacity>
             <Text style={styles.toDoEntry}>
               {todo.content} {todo.timeStamp}
               <Text style={styles.status}>{todo.status}</Text>

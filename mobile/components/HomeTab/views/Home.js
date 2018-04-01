@@ -67,9 +67,18 @@ class Home extends Component {
 
   handleSubmit(text){
     //console.log(text.target.val, 'press')
-    let todo = text.nativeEvent.text
-    console.log(todo,'submit')
-    this.props.addToDo(todo)
+    const { todos } = this.props.todos
+    const { ToDoActions } = this.props
+    let id = todos[todos.length - 1].id + 1
+    console.log(id, 'id')
+    let content = text.nativeEvent.text
+    let todo = {
+      id: id,
+      status: "not completed",
+      content: content,
+      timeStamp: "1240010"
+    }
+    ToDoActions.addToDo(todo)
     this.clearText()
     
   }
@@ -93,7 +102,7 @@ class Home extends Component {
           style={{height: 40, textAlign: 'center'}}
           placeholder="Type to do here"
           onChangeText={(text) => console.log(text)}
-          onSubmitEditing={()=>this.handleSubmit}
+          onSubmitEditing={(text)=>this.handleSubmit(text)}
         />
         {todos.map((todo, i)=>{ 
           if (todo.status !== "deleted"){
@@ -116,10 +125,12 @@ const mapDispatch = (dispatch) => {
   return {
     dispatch,
     ToDoActions: bindActionCreators(
-      ToDoActions
+      ToDoActions,
+      dispatch
     ),
     DeleteActions: bindActionCreators(
-      DeleteActions
+      DeleteActions,
+      dispatch
     )
   }
 }
