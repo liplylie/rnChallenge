@@ -4,3 +4,10 @@ export function addToDo(todo){
 	payload: todo
 	}
 }
+
+export function changeTodoStatus(todo){
+	return {
+	type: "CHANGE_TODO_STATUS",
+	payload: todo
+	}
+}
