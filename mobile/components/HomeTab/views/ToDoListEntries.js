@@ -9,6 +9,9 @@ import {
   TouchableOpacity,
   Text
 } from 'react-native';
+import Swipeout from 'react-native-swipeout';
+
+
 
 export default class ToDoList extends Component {
   constructor(){
@@ -27,18 +30,26 @@ export default class ToDoList extends Component {
   render() {
     const { todo } = this.props
     console.log(todo, 'todo')
-    
+    let swipeoutBtns = [
+      {
+        text: 'Button',
+        onPress: ()=>this.changeStatus("hi")
+      }
+    ]
+
     return (
-      <ScrollView style={{marginLeft: 15}}>
-        <TouchableOpacity onPress={()=>this.changeStatus(this.props.todo)}>
-          <Text style={styles.toDoEntry}>  
+      <View>
+        <Swipeout right={swipeoutBtns}>
+          <View style={styles.padding}>
+             <Text style={styles.toDoEntry}>  
             {todo.content} {todo.timeStamp}
             <Text style={styles.status}>
             {todo.status}
             </Text>
           </Text>
-        </TouchableOpacity>
-      </ScrollView>
+          </View>
+        </Swipeout>
+      </View>
     );
   }
 }
@@ -46,12 +57,15 @@ export default class ToDoList extends Component {
 const styles = StyleSheet.create({
   toDoEntry: {
     flex: 1, 
-    fontSize: 40,
+    fontSize: 30,
    }, 
    status: {
     fontSize: 18,
     color: "red",
     alignItems: 'flex-end'
+   },
+   padding: {
+    padding: 4
    }
 })
 
