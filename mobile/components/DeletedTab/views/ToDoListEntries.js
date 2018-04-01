@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import Swipeout from 'react-native-swipeout';
 import * as ToDoActions from "../../../actions/toDoAction";
+import * as DeleteActions from "../../../actions/deleteAction";
 import { bindActionCreators } from "redux";
 
 
@@ -22,12 +23,19 @@ class ToDoList extends Component {
     }
   }
 
-  changeStatus(text){
-   
-    console.log('changeSttus', text)
-    //this.props.deleteTodo(this.props.index)
-
+  changeStatus(todo, changeStatus) {
+    console.log("changeSttus", todo);
+    const { ToDoActions } = this.props;
+    todo.change = changeStatus;
+    ToDoActions.changeTodoStatus(todo);
   }
+
+  deleteTodo(todo){
+    console.log("changeSttus", todo);
+    const { ToDoActions } = this.props;
+    ToDoActions.DeleteToDo(todo);
+  }
+
   render() {
     const { todo } = this.props
     console.log(todo, 'todo')
@@ -35,7 +43,7 @@ class ToDoList extends Component {
       {
         text: 'Delete',
         backgroundColor: "red",
-        onPress: ()=>this.changeStatus("hi")
+        onPress: ()=>this.deleteTodo(todo)
       }
     ]
 
@@ -84,6 +92,10 @@ const mapDispatch = (dispatch) => {
     dispatch,
     ToDoActions: bindActionCreators(
       ToDoActions,
+      dispatch
+    ),
+    DeleteActions: bindActionCreators(
+      DeleteActions,
       dispatch
     )
   }

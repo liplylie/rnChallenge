@@ -78,8 +78,8 @@ class TabBarNav extends Component {
           {
             id: 10,
             status: "completed",
-            content: "should go to not completed",
-            timeStamp: "12400"
+            content: "should go to not trash",
+            timeStamp: "1240000"
           }, 
           {
             id: 11,

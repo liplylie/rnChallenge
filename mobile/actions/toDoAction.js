@@ -11,3 +11,10 @@ export function changeTodoStatus(todo){
 	payload: todo
 	}
 }
+
+export function DeleteToDo(todo){
+	return {
+	type: "DELETE_TODO",
+	payload: todo
+	}
+}
