@@ -50,7 +50,7 @@ class ToDoList extends Component {
     return (
       <View>
         <Swipeout right={swipeoutBtns} style={styles.toDoEntry}>
-        <TouchableOpacity onPress={(e)=>this.changeStatus(todo, "not completed")} style={styles.red}>
+        <TouchableOpacity onPress={()=>this.changeStatus(todo, "not completed")} style={styles.red}>
               <Text>change status</Text>
             </TouchableOpacity>
           <View style={styles.padding, styles.border}>
