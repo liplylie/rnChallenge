@@ -12,11 +12,7 @@ const addTodo = (state = initialState, action) => {
 			console.log(todo, 'change todo status redux')
 			console.log(action.payload, 'actoin payload redux')
 			if (todo.id === action.payload.id){
-				if(todo.status === "completed"){
-					todo.status = "not completed"
-				} else if (todo.status === "not completed"){
-					todo.status = "completed"
-				}
+					todo.status = action.payload.change
 			}
 			return todo
 		})

@@ -10,10 +10,11 @@ import {
   Text
 } from 'react-native';
 import Swipeout from 'react-native-swipeout';
+import * as ToDoActions from "../../../actions/toDoAction";
+import { bindActionCreators } from "redux";
 
 
-
-export default class ToDoList extends Component {
+class ToDoList extends Component {
   constructor(){
     super()
     this.state = {
@@ -41,6 +42,9 @@ export default class ToDoList extends Component {
     return (
       <View>
         <Swipeout right={swipeoutBtns} style={styles.toDoEntry}>
+        <TouchableOpacity onPress={(e)=>this.changeStatus(todo, "not completed")} style={styles.red}>
+              <Text>change status</Text>
+            </TouchableOpacity>
           <View style={styles.padding, styles.border}>
              <Text style={styles.toDoEntry}>  
             {todo.content} {todo.timeStamp}
@@ -75,4 +79,16 @@ const styles = StyleSheet.create({
    }
 })
 
+const mapDispatch = (dispatch) => {
+  return {
+    dispatch,
+    ToDoActions: bindActionCreators(
+      ToDoActions,
+      dispatch
+    )
+  }
+}
+
+
+export default connect(null, mapDispatch)(ToDoList)
 

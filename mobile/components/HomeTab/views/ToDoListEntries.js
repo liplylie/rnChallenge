@@ -10,23 +10,39 @@ import {
   Text
 } from 'react-native';
 import Swipeout from 'react-native-swipeout';
+import * as ToDoActions from "../../../actions/toDoAction";
+import { bindActionCreators } from "redux";
 
 
 
-export default class ToDoList extends Component {
+class ToDoList extends Component {
   constructor(){
     super()
-    this.state = {
-      status: 0,
+  }
+
+
+  changeStatus(todo, change) {
+    console.log("changeSttus", todo);
+    const { ToDoActions } = this.props;
+    let changeStatus = 'deleted'
+    if (change !== 'delete'){
+
+    if (todo.status === 'completed'){
+      changeStatus = 'not completed'
+      //todo.status = 'not completed'
+    } else if (todo.status === 'not completed'){
+      changeStatus = 'completed'
+      //todo.status = 'completed'
     }
   }
+    this.forceUpdate()
 
-  changeStatus(text){
-   
-    console.log('changeSttus', text)
-    //this.props.deleteTodo(this.props.index)
+    todo.change = changeStatus;
+    ToDoActions.changeTodoStatus(todo);
 
   }
+
+
   render() {
     const { todo } = this.props
     console.log(todo, 'todo')
@@ -34,7 +50,7 @@ export default class ToDoList extends Component {
       {
         text: 'Delete',
         backgroundColor: "red",
-        onPress: ()=>this.changeStatus("hi")
+        onPress: ()=>this.changeStatus(todo, 'delete')
       }
     ]
 
@@ -42,6 +58,11 @@ export default class ToDoList extends Component {
       <View>
         <Swipeout right={swipeoutBtns} style={styles.toDoEntry}>
           <View style={styles.padding, styles.border}>
+            <TouchableOpacity
+              onPress={e => this.changeStatus(todo) }
+            >
+              <Text>change status</Text>
+            </TouchableOpacity>
              <Text style={styles.toDoEntry}>  
             {todo.content} {todo.timeStamp}
             <Text style={styles.status}>
@@ -74,5 +95,18 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
    }
 })
+
+const mapDispatch = (dispatch) => {
+  return {
+    dispatch,
+    ToDoActions: bindActionCreators(
+      ToDoActions,
+      dispatch
+    )
+  }
+}
+
+
+export default connect(null, mapDispatch)(ToDoList)
 
 

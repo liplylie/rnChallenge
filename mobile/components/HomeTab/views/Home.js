@@ -60,14 +60,6 @@ const styles = StyleSheet.create({
 class Home extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      input: '',
-      todos: []
-    }
-  }
-  componentWillReceiveProps(nextProps) { 
-    console.log(nextProps, 'nextProps')
-    this.setState({todos : nextProps.todos.todos})
   }
   componentDidMount(){
     console.log(this.props, 'home props')
@@ -76,6 +68,7 @@ class Home extends Component {
   handleSubmit(text){
     //console.log(text.target.val, 'press')
     let todo = text.nativeEvent.text
+    console.log(todo,'submit')
     this.props.addToDo(todo)
     this.clearText()
     
@@ -88,6 +81,7 @@ class Home extends Component {
 
 
   render() {
+    const { todos } = this.props.todos
     return (
       <ScrollView style={{backgroundColor: "snow"}} >
       <KeyboardAvoidingView >
@@ -101,7 +95,7 @@ class Home extends Component {
           onChangeText={(text) => console.log(text)}
           onSubmitEditing={()=>this.handleSubmit}
         />
-        {this.state.todos.map((todo, i)=>{ 
+        {todos.map((todo, i)=>{ 
           if (todo.status !== "deleted"){
             return <ToDoEntry todo={todo} key={i} index={i} /> 
           }

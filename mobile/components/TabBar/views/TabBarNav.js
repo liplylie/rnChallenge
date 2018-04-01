@@ -60,19 +60,19 @@ class TabBarNav extends Component {
           },{
             id: 7,
             status: "not completed",
-            content: "walk the dog",
+            content: "should go to deleted",
             timeStamp: "123"
           }, 
           {
             id: 8,
             status: "completed",
-            content: "walk the cat",
+            content: "should go to deleted",
             timeStamp: "124"
           },
           {
             id: 9,
             status: "not completed",
-            content: "walk the dog",
+            content: "should go to completed",
             timeStamp: "123"
           }, 
           {
@@ -84,7 +84,7 @@ class TabBarNav extends Component {
           {
             id: 11,
             status: "deleted",
-            content: "walk the deleted",
+            content: "should be deleted",
             timeStamp: "124"
           }
         ]

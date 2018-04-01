@@ -27,21 +27,6 @@ class App extends Component {
     	// get data from firebase
 
     	// if data base is empty, leave this.state.id to 0
-    	this.setState({
-    		id: 2,
-    		todos: {
-    			0: {
-    				status: "not completed",
-    				content: "walk the dog",
-    				timeStamp: "123"
-    			}, 
-    			1: {
-    				status: "completed",
-    				content: "walk the cat",
-    				timeStamp: "124"
-    			}
-    		}
-    	})
     	// else id is equal to the last entries id number + 1
     }
   }

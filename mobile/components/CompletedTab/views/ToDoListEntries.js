@@ -17,14 +17,11 @@ class ToDoList extends Component {
     super();
   }
 
-  changeStatus(todo) {
+  changeStatus(todo, changeStatus) {
     console.log("changeSttus", todo);
-    const { ToDoActions } = this.props
-    ToDoActions.changeTodoStatus(todo)
-  }
-
-  deleteTodo(todo) {
-    console.log(todo, "delete");
+    const { ToDoActions } = this.props;
+    todo.change = changeStatus;
+    ToDoActions.changeTodoStatus(todo);
   }
 
   render() {
@@ -34,17 +31,20 @@ class ToDoList extends Component {
       {
         text: "Delete",
         backgroundColor: "red",
-        onPress: () => this.deleteTodo()
+        onPress: () => this.changeStatus(todo, "deleted")
       }
     ];
 
     return (
       <View>
         <Swipeout right={swipeoutBtns} style={styles.toDoEntry}>
-          <TouchableOpacity onPress={(e)=>this.changeStatus(todo)} style={styles.red}>
-              <Text>change status</Text>
-            </TouchableOpacity>
           <View style={(styles.padding, styles.border)}>
+          <TouchableOpacity
+            onPress={e => this.changeStatus(todo, "not completed")}
+            style={styles.red}
+          >
+            <Text>change status</Text>
+          </TouchableOpacity>
             <Text style={styles.toDoEntry}>
               {todo.content} {todo.timeStamp}
               <Text style={styles.status}>{todo.status}</Text>
@@ -80,15 +80,11 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = dispatch => {
   return {
     dispatch,
-    ToDoActions: bindActionCreators(
-      ToDoActions,
-      dispatch
-    )
-  }
-}
+    ToDoActions: bindActionCreators(ToDoActions, dispatch)
+  };
+};
 
-
-export default connect(null, mapDispatch)(ToDoList)
+export default connect(null, mapDispatch)(ToDoList);
