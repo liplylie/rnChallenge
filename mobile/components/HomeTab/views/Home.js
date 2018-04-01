@@ -13,7 +13,10 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import Spinner from 'react-native-spinkit';
-import ToDoEntry from './ToDoListEntries.js'
+import ToDoEntry from './ToDoListEntries.js';
+import * as ToDoActions from "../../../actions/toDoAction";
+import * as DeleteActions from "../../../actions/deleteAction";
+import { bindActionCreators } from "redux";
 
 const styles = StyleSheet.create({
   container: {
@@ -33,10 +36,6 @@ const styles = StyleSheet.create({
     height: 70,
     backgroundColor: 'white'
   }, 
-  collection: {
-    backgroundColor: 'skyblue',
-    flex:1,
-  },
   spinnerContainer:{
     flex: 1,
     justifyContent: 'center',
@@ -66,26 +65,13 @@ class Home extends Component {
       todos: []
     }
   }
-
+  componentWillReceiveProps(nextProps) { 
+    console.log(nextProps, 'nextProps')
+    this.setState({todos : nextProps.todos.todos})
+  }
   componentDidMount(){
     console.log(this.props, 'home props')
-    this.setState({
-        id: 2,
-        todos: [
-          {
-            id: 0,
-            status: "not completed",
-            content: "walk the dog",
-            timeStamp: "123"
-          }, 
-          {
-            id: 1,
-            status: "completed",
-            content: "walk the cat",
-            timeStamp: "124"
-          }
-        ]
-      })
+    let that = this
   }
 
   handleSubmit(text){
@@ -97,9 +83,15 @@ class Home extends Component {
     
   }
 
+   clearText(){
+    this._textInput.setNativeProps({text: ''});
+  }
+
+
+
   render() {
     return (
-      <ScrollView style={{backgroundColor: "lightblue"}} >
+      <ScrollView style={{backgroundColor: "snow"}} >
       <KeyboardAvoidingView >
         <Text style={styles.welcome}>
           To Do List
@@ -109,19 +101,36 @@ class Home extends Component {
           style={{height: 40, textAlign: 'center'}}
           placeholder="Type to do here"
           onChangeText={(text) => console.log(text)}
-          onSubmitEditing={this.handleSubmit}
+          onSubmitEditing={()=>this.handleSubmit}
         />
-        {this.state.todos.map((todo, i)=>{return <ToDoEntry todo={todo} key={i} index={i} /> })}
+        {this.state.todos.map((todo, i)=>{ 
+          if (todo.status !== "deleted"){
+            return <ToDoEntry todo={todo} key={i} index={i} /> 
+          }
+        })}
       </KeyboardAvoidingView>
       </ScrollView>
     );  
   }
 }
 
-const mapStateToProps = (store) =>{
+const mapStateToProps = store =>{
   return {
+    todos: store.addTodo
+  }
+}
+
+const mapDispatch = (dispatch) => {
+  return {
+    dispatch,
+    ToDoActions: bindActionCreators(
+      ToDoActions
+    ),
+    DeleteActions: bindActionCreators(
+      DeleteActions
+    )
   }
 }
 
 
-export default connect(mapStateToProps, null)(Home)
+export default connect(mapStateToProps, mapDispatch)(Home)

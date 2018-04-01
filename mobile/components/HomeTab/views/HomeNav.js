@@ -26,7 +26,6 @@ class HomeNav extends Component {
   }
 
   render() {
-    console.log(this.props, 'props')
     const { homeState, dispatch } = this.props
     return (
       <HomeNavigator

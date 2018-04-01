@@ -32,15 +32,16 @@ export default class ToDoList extends Component {
     console.log(todo, 'todo')
     let swipeoutBtns = [
       {
-        text: 'Button',
+        text: 'Delete',
+        backgroundColor: "red",
         onPress: ()=>this.changeStatus("hi")
       }
     ]
 
     return (
       <View>
-        <Swipeout right={swipeoutBtns}>
-          <View style={styles.padding}>
+        <Swipeout right={swipeoutBtns} style={styles.toDoEntry}>
+          <View style={styles.padding, styles.border}>
              <Text style={styles.toDoEntry}>  
             {todo.content} {todo.timeStamp}
             <Text style={styles.status}>
@@ -56,8 +57,8 @@ export default class ToDoList extends Component {
 
 const styles = StyleSheet.create({
   toDoEntry: {
-    flex: 1, 
-    fontSize: 30,
+    height: 80,
+    backgroundColor: "white"
    }, 
    status: {
     fontSize: 18,
@@ -65,7 +66,12 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end'
    },
    padding: {
-    padding: 4
+    padding: 4,
+   },
+   border: {
+    borderRadius: 2,
+    borderWidth: 0.5,
+    borderColor: 'gray',
    }
 })
 
