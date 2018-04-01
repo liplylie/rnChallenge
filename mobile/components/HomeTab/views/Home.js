@@ -8,9 +8,12 @@ import {
   Image,
   ScrollView, 
   Header,
+  TextInput,
+  KeyboardAvoidingView
 } from 'react-native';
 import { connect } from 'react-redux';
 import Spinner from 'react-native-spinkit';
+import ToDoEntry from './ToDoListEntries.js'
 
 const styles = StyleSheet.create({
   container: {
@@ -42,7 +45,17 @@ const styles = StyleSheet.create({
   spinner:{
     justifyContent: 'center',
     alignItems: 'center'
-  }
+  },
+   welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  instructions: {
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 5,
+  },
 });
 
 class Home extends Component {
@@ -50,19 +63,60 @@ class Home extends Component {
     super(props);
     this.state = {
       input: '',
-      results: []
+      todos: []
     }
   }
 
-  render() {
-      return (
-        <View style={styles.spinnerContainer}>
-          <Text> Home </Text>
-          <Spinner type='FadingCircle' style={styles.spinner}/>
-        </View>
-      )
-    }
+  componentDidMount(){
+    console.log(this.props, 'home props')
+    this.setState({
+        id: 2,
+        todos: [
+          {
+            id: 0,
+            status: "not completed",
+            content: "walk the dog",
+            timeStamp: "123"
+          }, 
+          {
+            id: 1,
+            status: "completed",
+            content: "walk the cat",
+            timeStamp: "124"
+          }
+        ]
+      })
   }
+
+  handleSubmit(text){
+    //console.log(text.target.val, 'press')
+    let todo = text.nativeEvent.text
+    console.log(todo,'submit')
+    this.props.addToDo(todo)
+    this.clearText()
+    
+  }
+
+  render() {
+    return (
+      <ScrollView style={{backgroundColor: "lightblue"}} >
+      <KeyboardAvoidingView >
+        <Text style={styles.welcome}>
+          To Do List
+        </Text>
+          <TextInput
+          ref={component => this._textInput = component}
+          style={{height: 40, textAlign: 'center'}}
+          placeholder="Type to do here"
+          onChangeText={(text) => console.log(text)}
+          onSubmitEditing={this.handleSubmit}
+        />
+        {this.state.todos.map((todo, i)=>{return <ToDoEntry todo={todo} key={i} index={i} /> })}
+      </KeyboardAvoidingView>
+      </ScrollView>
+    );  
+  }
+}
 
 const mapStateToProps = (store) =>{
   return {

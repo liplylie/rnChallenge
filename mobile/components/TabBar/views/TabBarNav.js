@@ -15,6 +15,10 @@ const addListener = createReduxBoundAddListener("root");
 
 class TabBarNav extends Component {
  
+
+  componentDidMount(){
+    console.log(this.props, 'tab props')
+  }
   render() {
     const { dispatch, tabBarState } = this.props
     return (

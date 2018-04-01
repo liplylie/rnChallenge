@@ -10,13 +10,39 @@ import Spinner from 'react-native-spinkit'
 class App extends Component {
 	constructor(props){
 		super(props)
+		this.state = {
+			id: 0,
+			todos: {}
+		}
 	}
 
-	componentDidMount() {
+	componentWillMount() {
     const { actions, authorized } = this.props;
 
     if(!authorized) {
       //actions.getFBToken();
+    }
+
+    if (authorized){
+    	// get data from firebase
+
+    	// if data base is empty, leave this.state.id to 0
+    	this.setState({
+    		id: 2,
+    		todos: {
+    			0: {
+    				status: "not completed",
+    				content: "walk the dog",
+    				timeStamp: "123"
+    			}, 
+    			1: {
+    				status: "completed",
+    				content: "walk the cat",
+    				timeStamp: "124"
+    			}
+    		}
+    	})
+    	// else id is equal to the last entries id number + 1
     }
   }
 
@@ -31,7 +57,7 @@ class App extends Component {
     } else {
       return (
 
-        <TabBarNav />
+        <TabBarNav id={this.state.id} todos={this.state.todos}/>
       )
     }
   }
