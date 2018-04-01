@@ -71,13 +71,11 @@ class Home extends Component {
   }
   componentDidMount(){
     console.log(this.props, 'home props')
-    let that = this
   }
 
   handleSubmit(text){
     //console.log(text.target.val, 'press')
     let todo = text.nativeEvent.text
-    console.log(todo,'submit')
     this.props.addToDo(todo)
     this.clearText()
     

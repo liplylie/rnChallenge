@@ -11,12 +11,13 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import Spinner from 'react-native-spinkit';
+import ToDoEntry from './ToDoListEntries.js';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: 'white'
+    backgroundColor: 'red'
   },
   title:{
     flexDirection: 'column',
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
   },
   spinner:{
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   }
 });
 
@@ -49,24 +50,30 @@ class Completed extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      input: '',
-      results: []
+      todos: []
     }
   }
-
+      
   render() {
-      return (
-        <View style={styles.spinnerContainer}>
-          <Text>Completed</Text>
-          <Spinner type='FadingCircle' style={styles.spinner}/>
-        </View>
-      )
-    }
+    console.log(this.props, 'not completed props')
+    const { todos } = this.props.todos
+    return (
+      <ScrollView style={{backgroundColor: "snow"}} >
+        {todos.map((todo, i)=>{ 
+          if (todo.status === "completed"){
+            return <ToDoEntry todo={todo} key={i} index={i} /> 
+          }
+        })}
+      </ScrollView>
+    );  
+  }
 }
+
+
 
 const mapStateToProps = (store) =>{
   return {
-    
+    todos: store.addTodo
   }
 }
 

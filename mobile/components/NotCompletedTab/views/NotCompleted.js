@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import Spinner from 'react-native-spinkit';
+import ToDoEntry from './ToDoListEntries.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -49,24 +50,31 @@ class NotCompleted extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      input: '',
-      results: []
+      todos: []
     }
   }
-
+      
   render() {
-      return (
-        <View style={styles.spinnerContainer}>
-          <Spinner type='FadingCircle' style={styles.spinner}/>
-          <Text> Not Completed </Text>
-        </View>
-      )
-    }
+    console.log(this.props, 'not completed props')
+    const { todos } = this.props.todos
+    return (
+      <ScrollView style={{backgroundColor: "snow"}} >
+        {todos.map((todo, i)=>{ 
+          if (todo.status === "not completed"){
+            console.log(todo, 'not completed todo look')
+            return <ToDoEntry todo={todo} key={i} index={i} /> 
+          }
+        })}
+      </ScrollView>
+    );  
   }
+}
+
 
 
 const mapStateToProps = (store) =>{
   return {
+    todos: store.addTodo
   }
 }
 
