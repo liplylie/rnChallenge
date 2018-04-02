@@ -16,8 +16,9 @@ import * as AuthActions from "../../../actions/logActions.js";
 import * as ToDoActions from "../../../actions/toDoAction.js";
 import { bindActionCreators } from "redux";
 import { firebase, app, facebookProvider } from "../../../firebase";
-import App from "../../App"
+import App from "../../App";
 import Button from "react-native-button";
+import { NavigationActions } from "react-navigation";
 
 const styles = StyleSheet.create({
   container: {
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
 class Profile extends Component {
   static navigationOptions = {
     header: null
-  }
+  };
   constructor(props) {
     super(props);
     this.state = {
@@ -67,22 +68,23 @@ class Profile extends Component {
   }
 
   logOut() {
-    const { actions, ToDoActions } = this.props;
-    console.log('logout')
+    const { actions, ToDoActions, navigation } = this.props;
+    console.log("logout");
+    navigation.navigate("HomeNav")
     app
       .auth()
       .signOut()
       .then(user => {
         actions.LogOut(false);
-        ToDoActions.DeleteAll()
+        ToDoActions.DeleteAll();
       });
   }
 
   render() {
-    console.log(this.props, 'profile props')
+    console.log(this.props, "profile props");
     return (
       <View style={styles.container}>
-         <Button
+        <Button
           containerStyle={{
             padding: 10,
             height: 45,
