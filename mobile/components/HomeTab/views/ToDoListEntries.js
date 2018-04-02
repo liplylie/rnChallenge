@@ -103,7 +103,7 @@ class ToDoList extends Component {
             <Text style={styles.toDoEntry}>
               {todo.content} {"\n"}
               <Text style={styles.time}>
-                {new Date(parseInt(todo.timeStamp)).toUTCString()}
+                {new Date(parseInt(todo.timeStamp)).toUTCString() === "Invalid Date" ? new Date(Date.now()).toLocaleString() : new Date(parseInt(todo.timeStamp)).toLocaleString()}
               </Text>
             </Text>
           </View>

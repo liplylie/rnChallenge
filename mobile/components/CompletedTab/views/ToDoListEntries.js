@@ -24,7 +24,9 @@ class ToDoList extends Component {
     console.log("changeSttus", todo);
     const { ToDoActions } = this.props;
     todo.change = changeStatus;
-    let userTodos = firebaseDB.ref("/users/" + this.props.Auth.userId + "/todos");
+    let userTodos = firebaseDB.ref(
+      "/users/" + this.props.Auth.userId + "/todos"
+    );
     userTodos.once("value").then(
       snapshot => {
         if (snapshot.val()) {
@@ -72,7 +74,10 @@ class ToDoList extends Component {
             <Text style={styles.toDoEntry}>
               {todo.content} {"\n"}
               <Text style={styles.time}>
-                {new Date(parseInt(todo.timeStamp)).toUTCString()}
+                {new Date(parseInt(todo.timeStamp)).toUTCString() ===
+                "Invalid Date"
+                  ? new Date(Date.now()).toLocaleString()
+                  : new Date(parseInt(todo.timeStamp)).toLocaleString()}
               </Text>
             </Text>
           </View>
@@ -87,7 +92,7 @@ const styles = StyleSheet.create({
     height: 80,
     backgroundColor: "white",
     padding: 14,
-    margin: 1,
+    margin: 1
   },
   time: {
     fontSize: 10,
@@ -104,7 +109,7 @@ const styles = StyleSheet.create({
   },
   columns: {
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "center"
   },
   image: {
     width: 20,
