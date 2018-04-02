@@ -17,42 +17,6 @@ class App extends Component {
 		};
 	}
 
-	componentWillMount() {
-		const { actions, authorized, ToDoActions } = this.props;
-		let that = this;
-		this.removeAuthListener = app.auth().onAuthStateChanged(user => {
-			if (user) {
-				that.setState({
-					userID: user.uid
-				});
-
-				let userTodos = firebaseDB.ref("/users/" + user.uid + "/todos");
-
-				userTodos.once("value").then(
-					snapshot => {
-						if (snapshot.val()) {
-							console.log(snapshot.val(), 'todos from fb')
-							let todos = snapshot.val();
-							for (let i = 0; i < todos.length; i++) {
-								ToDoActions.addToDo(todos[i]);
-								console.log(todos[i], "tab bar nav todo");
-							}
-						}
-					},
-					errorObject => {
-						console.log("The read failed: " + errorObject.code);
-					}
-				);
-			} else {
-				console.log("fail");
-			}
-		});
-	}
-
-	componentWillUnmount() {
-		this.removeAuthListener();
-	}
-
 	render() {
 		const { authorized, authorizing } = this.props;
 		if (!authorized) {
