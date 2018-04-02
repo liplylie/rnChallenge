@@ -7,6 +7,7 @@
 		"test": "jest"
 	},
 	"dependencies": {
+		"email-validator": "^1.1.1",
 		"firebase": "^4.12.1",
 		"re-base": "^3.2.2",
 		"react": "16.0.0-beta.5",

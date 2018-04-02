@@ -1,74 +1,161 @@
-import React, { Component } from 'react';
-import { List, ListItem } from 'react-native-elements'
+import React, { Component } from "react";
+import { List, ListItem } from "react-native-elements";
 import {
   Platform,
   StyleSheet,
   Text,
   View,
   Image,
-  ScrollView, 
+  ScrollView,
   Header,
-} from 'react-native';
-import { connect } from 'react-redux';
-import Spinner from 'react-native-spinkit';
+  TextInput,
+  TouchableHighlight,
+  Alert, 
+} from "react-native";
+import Button from "react-native-button"
+import { connect } from "react-redux";
+import Spinner from "react-native-spinkit";
+import { bindActionCreators } from "redux";
+import * as AuthActions from "../../../actions/logActions.js";
+import validator from "email-validator"
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: 'red'
+    justifyContent: 'center',
+    backgroundColor: '#ecf0f1',
   },
-  title:{
-    flexDirection: 'column',
+  input: {
+    width: 200,
+    height: 44,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: 'black',
+    marginBottom: 10,
+  },
+  button: {
+    height: 40,
+    width: 200
+  },
+  title: {
+    flexDirection: "column",
     margin: 10
   },
   image: {
     width: 200,
-    height: 30,
+    height: 30
   },
-  header: { 
+  header: {
     height: 70,
-    backgroundColor: 'white'
-  }, 
+    backgroundColor: "white"
+  },
   collection: {
-    backgroundColor: 'skyblue',
-    flex:1,
+    backgroundColor: "skyblue",
+    flex: 1
   },
-  spinnerContainer:{
+  spinnerContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center"
   },
-  spinner:{
-    justifyContent: 'center',
-    alignItems: 'center',
+  spinner: {
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
 
 class SignUp extends Component {
   constructor(props) {
     super(props);
+    
     this.state = {
-      input: '',
-      results: []
+      email: '',
+      password: '',
+      passwordTwo: ''
+    };
+  }
+  
+  onSignUp() {
+    const { email, password } = this.state;
+    if (this.state.password !== this.state.passwordTwo){
+       Alert.alert("Passwords do not match");
+    } else if (!this.validateEmail(this.state.email)){
+      Alert.alert("Please enter valid email");
+    } else {
+      // create user firebase
+      this.logIn()
     }
+  }
+
+  validateEmail(email){
+    console.log(validator.validate(email), 'validatoin')
+    return validator.validate(email)
+  };
+
+  logIn() {
+    const { actions, navigation } = this.props;
+    //const { navigation } = this.props.navigation;
+    actions.Login({
+      online: false,
+      name: "",
+      userId: "",
+      picture: "",
+      email: "",
+      error: null,
+      authorized: true,
+      authorizing: false
+    });
+    navigation.navigate("TabBar");
   }
 
   render() {
-      return (
-        <View style={styles.spinnerContainer}>
-          <Spinner type='FadingCircle' style={styles.spinner}/>
-          <Text> SignUp </Text>
-        </View>
-      )
-    }
-  }
-
-
-const mapStateToProps = (store) =>{
-  return {
+    return (
+      <View style={styles.container}>
+        <TextInput
+          value={this.state.email}
+          onChangeText={(email) => this.setState({ email })}
+          placeholder={'Email'}
+          style={styles.input}
+        />
+        <TextInput
+          value={this.state.password}
+          onChangeText={(password) => this.setState({ password })}
+          placeholder={'Password'}
+          secureTextEntry={true}
+          style={styles.input}
+        />
+        <TextInput
+          value={this.state.passwordTwo}
+          onChangeText={(passwordTwo) => this.setState({ passwordTwo })}
+          placeholder={'Confrim Password'}
+          secureTextEntry={true}
+          style={styles.input}
+        />
+        
+         <Button
+          containerStyle={{padding:10, height:45, overflow:'hidden', borderRadius:4, backgroundColor: 'white'}}
+          disabledContainerStyle={{backgroundColor: 'grey'}}
+          style={{fontSize: 20, color: 'green'}}
+          onPress={()=>this.onSignUp()}>
+          SignUp
+        </Button>
+      </View>
+    );
   }
 }
 
+const loginState = state => {
+  return {
+    authorizing: state.Auth.authorizing,
+    authorized: state.Auth.authorized
+  };
+};
 
-export default connect(mapStateToProps, null)(SignUp)
+const loginDispatch = dispatch => {
+  return {
+    actions: bindActionCreators(AuthActions, dispatch)
+  };
+};
+
+export default connect(loginState, loginDispatch)(SignUp);
