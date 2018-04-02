@@ -1,6 +1,7 @@
 ### rnChallenge
 To Do list with Firebase Auth and DB
 Sample: 
+<br/>
 [![ToDoApp](https://img.youtube.com/vi/BImUVuqNz_Y/0.jpg)](https://www.youtube.com/watch?v=BImUVuqNz_Y "ToDoApp")
 
 ## Table of Contents
