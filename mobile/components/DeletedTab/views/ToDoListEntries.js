@@ -108,7 +108,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 14,
     margin: 1,
-    fontSize: 16
   },
   time: {
     fontSize: 10,
@@ -126,7 +125,6 @@ const styles = StyleSheet.create({
   columns: {
     flexDirection: "row",
     alignItems: "center",
-    textAlign: "center"
   },
   image: {
     width: 20,
