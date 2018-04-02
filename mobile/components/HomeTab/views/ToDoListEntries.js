@@ -1,7 +1,6 @@
-
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { 
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import {
   ScrollView,
   StyleSheet,
   View,
@@ -9,20 +8,20 @@ import {
   TouchableOpacity,
   Text,
   Image
-} from 'react-native';
-import Swipeout from 'react-native-swipeout';
+} from "react-native";
+import Swipeout from "react-native-swipeout";
 import * as ToDoActions from "../../../actions/toDoAction";
 import { bindActionCreators } from "redux";
-
-
+import { app, facebookProvider, firebaseDB } from "../../../firebase";
+import firebase from "firebase";
 
 class ToDoList extends Component {
-  constructor(){
-    super()
+  constructor() {
+    super();
   }
 
-  componentDidMount(){
-    console.log("home todo list lands again", this.props)
+  componentDidMount() {
+    console.log("home todo list lands again", this.props);
   }
 
   formatAMPM(date) {
@@ -35,38 +34,54 @@ class ToDoList extends Component {
     return strTime;
   }
 
-
   changeStatus(todo, change) {
     console.log("changeSttus", todo);
     const { ToDoActions } = this.props;
-    let changeStatus = 'deleted'
-    if (change !== 'delete'){
-
-    if (todo.status === 'completed'){
-      changeStatus = 'not completed'
-      //todo.status = 'not completed'
-    } else if (todo.status === 'not completed'){
-      changeStatus = 'completed'
-      //todo.status = 'completed'
+    let changeStatus = "deleted";
+    if (change !== "delete") {
+      if (todo.status === "completed") {
+        changeStatus = "not completed";
+        //todo.status = 'not completed'
+      } else if (todo.status === "not completed") {
+        changeStatus = "completed";
+        //todo.status = 'completed'
+      }
     }
-  }
-    this.forceUpdate()
+    let userTodos = firebaseDB.ref("/users/" + this.props.Auth.userId + "/todos");
+    userTodos.once("value").then(
+      snapshot => {
+        if (snapshot.val()) {
+          console.log(snapshot.val(), "todos from home ");
+          let todos = snapshot.val();
+          todos.map(item => {
+            if (item.id === todo.id) {
+              item.status = changeStatus;
+            }
+            return item;
+          });
+          userTodos.set(todos);
+        }
+      },
+      errorObject => {
+        console.log("The read failed: " + errorObject.code);
+      }
+    );
+
+    this.forceUpdate();
     todo.change = changeStatus;
     ToDoActions.changeTodoStatus(todo);
-
   }
 
-
   render() {
-    const { todo } = this.props
-    console.log(todo, 'todo home list')
+    const { todo } = this.props;
+    console.log(todo, "todo home list");
     let swipeoutBtns = [
       {
-        text: 'Delete',
+        text: "Delete",
         backgroundColor: "red",
-        onPress: ()=>this.changeStatus(todo, 'delete')
+        onPress: () => this.changeStatus(todo, "delete")
       }
-    ]
+    ];
 
     return (
       <View>
@@ -77,7 +92,11 @@ class ToDoList extends Component {
               style={styles.red}
             >
               <Image
-                source={todo.status === "completed" ? require("../../../TabPhotos/add.png") : require("../../../TabPhotos/notComplete.png")}
+                source={
+                  todo.status === "completed"
+                    ? require("../../../TabPhotos/add.png")
+                    : require("../../../TabPhotos/notComplete.png")
+                }
                 style={styles.image}
               />
             </TouchableOpacity>
@@ -99,7 +118,7 @@ const styles = StyleSheet.create({
     height: 80,
     backgroundColor: "white",
     padding: 14,
-    margin: 1,
+    margin: 1
   },
   time: {
     fontSize: 10,
@@ -116,7 +135,7 @@ const styles = StyleSheet.create({
   },
   columns: {
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "center"
   },
   image: {
     width: 20,
@@ -125,19 +144,18 @@ const styles = StyleSheet.create({
     bottom: 10
   }
 });
+const mapStateToProps = store => {
+  return {
+    todos: store.addTodo,
+    Auth: store.Log
+  };
+};
 
-
-const mapDispatch = (dispatch) => {
+const mapDispatch = dispatch => {
   return {
     dispatch,
-    ToDoActions: bindActionCreators(
-      ToDoActions,
-      dispatch
-    )
-  }
-}
+    ToDoActions: bindActionCreators(ToDoActions, dispatch)
+  };
+};
 
-
-export default connect(null, mapDispatch)(ToDoList)
-
-
+export default connect(mapStateToProps, mapDispatch)(ToDoList);

@@ -12,6 +12,8 @@ import {
 import Swipeout from "react-native-swipeout";
 import * as ToDoActions from "../../../actions/toDoAction";
 import { bindActionCreators } from "redux";
+import { app, facebookProvider, firebaseDB } from "../../../firebase";
+import firebase from "firebase";
 
 class ToDoList extends Component {
   constructor() {
@@ -22,6 +24,24 @@ class ToDoList extends Component {
     console.log("changeSttus", todo);
     const { ToDoActions } = this.props;
     todo.change = changeStatus;
+    let userTodos = firebaseDB.ref("/users/" + this.props.Auth.userId + "/todos");
+    userTodos.once("value").then(
+      snapshot => {
+        if (snapshot.val()) {
+          let todos = snapshot.val();
+          todos.map(item => {
+            if (item.id === todo.id) {
+              item.status = changeStatus;
+            }
+            return item;
+          });
+          userTodos.set(todos);
+        }
+      },
+      errorObject => {
+        console.log("The read failed: " + errorObject.code);
+      }
+    );
     ToDoActions.changeTodoStatus(todo);
   }
 
@@ -94,6 +114,13 @@ const styles = StyleSheet.create({
   }
 });
 
+const mapStateToProps = store => {
+  return {
+    todos: store.addTodo,
+    Auth: store.Log
+  };
+};
+
 const mapDispatch = dispatch => {
   return {
     dispatch,
@@ -101,4 +128,4 @@ const mapDispatch = dispatch => {
   };
 };
 
-export default connect(null, mapDispatch)(ToDoList);
+export default connect(mapStateToProps, mapDispatch)(ToDoList);

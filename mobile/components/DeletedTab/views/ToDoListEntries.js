@@ -22,9 +22,26 @@ class ToDoList extends Component {
   }
 
   changeStatus(todo, changeStatus) {
-    console.log("changeSttus", todo);
     const { ToDoActions } = this.props;
     todo.change = changeStatus;
+    let userTodos = firebaseDB.ref("/users/" + this.props.Auth.userId + "/todos");
+    userTodos.once("value").then(
+      snapshot => {
+        if (snapshot.val()) {
+          let todos = snapshot.val();
+          todos.map(item => {
+            if (item.id === todo.id) {
+              item.status = changeStatus;
+            }
+            return item;
+          });
+          userTodos.set(todos);
+        }
+      },
+      errorObject => {
+        console.log("The read failed: " + errorObject.code);
+      }
+    );
     ToDoActions.changeTodoStatus(todo);
   }
 
