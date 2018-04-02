@@ -10,28 +10,29 @@ import {
   Header,
   TextInput,
   TouchableHighlight,
-  Alert, 
+  Alert
 } from "react-native";
-import Button from "react-native-button"
+import Button from "react-native-button";
 import { connect } from "react-redux";
 import Spinner from "react-native-spinkit";
 import { bindActionCreators } from "redux";
 import * as AuthActions from "../../../actions/logActions.js";
+import { firebase, app, facebookProvider } from "../../../firebase";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ecf0f1',
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#ecf0f1"
   },
   input: {
     width: 200,
     height: 44,
     padding: 10,
     borderWidth: 1,
-    borderColor: 'black',
-    marginBottom: 10,
+    borderColor: "black",
+    marginBottom: 10
   },
   button: {
     height: 40,
@@ -67,17 +68,17 @@ const styles = StyleSheet.create({
 class LogIn extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
-      username: '',
-      password: '',
+      email: "",
+      password: ""
     };
   }
-  
-  onLogin() {
-    const { username, password } = this.state;
+
+  logIn() {
+    const { email, password } = this.state;
     const { actions, navigation } = this.props;
-    //const { navigation } = this.props.navigation;
+
     actions.Login({
       online: false,
       name: "",
@@ -91,28 +92,50 @@ class LogIn extends Component {
     navigation.navigate("TabBar");
   }
 
+  onLogin() {
+    const { email, password } = this.state;
+    app
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(result => {
+        console.log("logged in");
+        this.logIn();
+      })
+      .catch(err => {
+        console.log("error with login", err);
+        alert(err.message);
+      });
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <TextInput
-          value={this.state.username}
-          onChangeText={(username) => this.setState({ username })}
-          placeholder={'Username'}
+          value={this.state.email}
+          onChangeText={email => this.setState({ email })}
+          placeholder={"Email"}
           style={styles.input}
         />
         <TextInput
           value={this.state.password}
-          onChangeText={(password) => this.setState({ password })}
-          placeholder={'Password'}
+          onChangeText={password => this.setState({ password })}
+          placeholder={"Password"}
           secureTextEntry={true}
           style={styles.input}
         />
-        
-         <Button
-          containerStyle={{padding:10, height:45, overflow:'hidden', borderRadius:4, backgroundColor: 'white'}}
-          disabledContainerStyle={{backgroundColor: 'grey'}}
-          style={{fontSize: 20, color: 'green'}}
-          onPress={()=>this.onLogin()}>
+
+        <Button
+          containerStyle={{
+            padding: 10,
+            height: 45,
+            overflow: "hidden",
+            borderRadius: 4,
+            backgroundColor: "white"
+          }}
+          disabledContainerStyle={{ backgroundColor: "grey" }}
+          style={{ fontSize: 20, color: "green" }}
+          onPress={() => this.onLogin()}
+        >
           Login
         </Button>
       </View>

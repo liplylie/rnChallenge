@@ -1,77 +1,108 @@
-import React, { Component } from 'react';
-import TabBarNav from './TabBar/views/TabBarNav'
-import { connect } from 'react-redux'
-import { View, Text, Image, StyleSheet } from 'react-native'
-import { bindActionCreators } from 'redux'
-import AuthNav from './Auth/views/AuthNav.js'
-import * as AuthActions from '../actions/logActions.js'
-import Spinner from 'react-native-spinkit'
+import React, { Component } from "react";
+import TabBarNav from "./TabBar/views/TabBarNav";
+import { connect } from "react-redux";
+import { View, Text, Image, StyleSheet } from "react-native";
+import { bindActionCreators } from "redux";
+import AuthNav from "./Auth/views/AuthNav.js";
+import * as AuthActions from "../actions/logActions.js";
+import * as ToDoActions from "../actions/toDoAction.js";
+import Spinner from "react-native-spinkit";
+import { app, firebaseDB } from "../firebase";
 
 class App extends Component {
-	constructor(props){
-		super(props)
+	constructor(props) {
+		super(props);
 		this.state = {
-			id: 0,
-			todos: {}
-		}
+			userID: ""
+		};
 	}
 
 	componentWillMount() {
-    const { actions, authorized } = this.props;
+		const { actions, authorized, ToDoActions } = this.props;
+		let that = this;
+		this.removeAuthListener = app.auth().onAuthStateChanged(user => {
+			if (user) {
+				that.setState({
+					userID: user.uid
+				});
 
-    if(!authorized) {
-      //actions.getFBToken();
-    }
+				let userTodos = firebaseDB.ref("/users/" + user.uid + "/todos");
 
-    if (authorized){
-    	// get data from firebase
+				userTodos.once("value").then(
+					snapshot => {
+						if (snapshot.val()) {
+							console.log(snapshot.val(), 'todos from fb')
+							let todos = snapshot.val();
+							for (let i = 0; i < todos.length; i++) {
+								ToDoActions.addToDo(todos[i]);
+								console.log(todos[i], "tab bar nav todo");
+							}
+						}
+					},
+					errorObject => {
+						console.log("The read failed: " + errorObject.code);
+					}
+				);
+			} else {
+				console.log("fail");
+			}
+		});
+	}
 
-    	// if data base is empty, leave this.state.id to 0
-    	// else id is equal to the last entries id number + 1
-    }
-  }
+	componentWillUnmount() {
+		this.removeAuthListener();
+	}
 
-  render() {
-  	const { authorized , authorizing } = this.props
-  	if(!authorized) {
-      return (
-        <View style={styles.container}>
-          {authorizing ? <View><Text>Loading</Text><Spinner type='FadingCircle'/></View> :<AuthNav />}
-        </View>
-      )
-    } else {
-      return (
-
-        <TabBarNav id={this.state.id} todos={this.state.todos}/>
-      )
-    }
-  }
+	render() {
+		const { authorized, authorizing } = this.props;
+		if (!authorized) {
+			return (
+				<View style={styles.container}>
+					{authorizing ? (
+						<View>
+							<Text>Loading</Text>
+							<Spinner type="FadingCircle" />
+						</View>
+					) : (
+						<AuthNav />
+					)}
+				</View>
+			);
+		} else {
+			return <TabBarNav id={this.state.id} todos={this.state.todos} />;
+		}
+	}
 }
 
-const appState = (state) => {
-  return {
-    authorized: state.Log.authorized,
-    authorizing: state.Log.authorizing,
-  }
-}
+const appState = state => {
+	return {
+		authorized: state.Log.authorized,
+		authorizing: state.Log.authorizing
+	};
+};
 
-const appDispatch = (dispatch) => {
-  return {
-    actions: bindActionCreators(AuthActions, dispatch),
-  }
-}
+const appDispatch = dispatch => {
+	return {
+		dispatch,
+		actions: bindActionCreators(AuthActions, dispatch),
+    ToDoActions: bindActionCreators(
+      ToDoActions,
+      dispatch
+    )
+	};
+};
 
-export default connect(appState, appDispatch)(App); 
+export default connect(appState, appDispatch)(App);
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-  image: {
-    width: 350,
-    height: 200
-  }
+	container: {
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: "white"
+	},
+	image: {
+		width: 350,
+		height: 200
+	}
 });

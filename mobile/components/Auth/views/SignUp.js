@@ -18,6 +18,7 @@ import Spinner from "react-native-spinkit";
 import { bindActionCreators } from "redux";
 import * as AuthActions from "../../../actions/logActions.js";
 import validator from "email-validator"
+import { firebase, app, facebookProvider } from "../../../firebase";
 
 const styles = StyleSheet.create({
   container: {
@@ -77,15 +78,24 @@ class SignUp extends Component {
   }
   
   onSignUp() {
-    const { email, password } = this.state;
-    if (this.state.password !== this.state.passwordTwo){
+    const { email, password, passwordTwo } = this.state;
+    if (password !== passwordTwo){
        Alert.alert("Passwords do not match");
-    } else if (!this.validateEmail(this.state.email)){
+    } else if (!this.validateEmail(email)){
       Alert.alert("Please enter valid email");
     } else {
-      // create user firebase
-      this.logIn()
-    }
+      app
+        .auth()
+        .fetchProvidersForEmail(email)
+        .then(providers => {
+          if (providers.length === 0) {
+            this.logIn()
+            return app.auth().createUserWithEmailAndPassword(email, password);
+          } else {
+            Alert.alert("You already have an account");
+          }
+        })
+      }
   }
 
   validateEmail(email){
@@ -95,13 +105,12 @@ class SignUp extends Component {
 
   logIn() {
     const { actions, navigation } = this.props;
-    //const { navigation } = this.props.navigation;
     actions.Login({
       online: false,
       name: "",
       userId: "",
       picture: "",
-      email: "",
+      email: this.state.email,
       error: null,
       authorized: true,
       authorizing: false
