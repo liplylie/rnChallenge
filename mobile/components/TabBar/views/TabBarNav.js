@@ -41,14 +41,6 @@ class TabBarNav extends Component {
           authorized: true,
           authorizing: false
         });
-        let todos = [
-      {
-        id: 12,
-        status: "not completed",
-        content: "made from firebase",
-        timeStamp: "123"
-      },
-    ];
         userTodos.once("value").then(
           snapshot => {
             if (snapshot.val()) {
@@ -58,9 +50,7 @@ class TabBarNav extends Component {
                 ToDoActions.addToDo(todos[i]);
                 console.log(todos[i], "tab bar nav todo");
               }
-            } else {
-              userTodos.update(todos);
-            }
+            } 
           },
           errorObject => {
             console.log("The read failed: " + errorObject.code);
@@ -76,83 +66,7 @@ class TabBarNav extends Component {
     this.removeAuthListener();
   }
 
-  componentDidMount() {
-    console.log(this.props, "tab props");
-    const { ToDoActions } = this.props;
-    console.log(ToDoActions, "ToDoActions");
-    let todos = [
-      {
-        id: 0,
-        status: "not completed",
-        content: "walk the dog",
-        timeStamp: "123"
-      },
-      {
-        id: 1,
-        status: "completed",
-        content: "walk the cat",
-        timeStamp: "124"
-      },
-      {
-        id: 3,
-        status: "not completed",
-        content: "walk the dog",
-        timeStamp: "123"
-      },
-      {
-        id: 4,
-        status: "completed",
-        content: "walk the cat",
-        timeStamp: "124"
-      },
-      {
-        id: 5,
-        status: "not completed",
-        content: "walk the dog",
-        timeStamp: "123"
-      },
-      {
-        id: 6,
-        status: "completed",
-        content: "walk the cat",
-        timeStamp: "124"
-      },
-      {
-        id: 7,
-        status: "not completed",
-        content: "should go to deleted",
-        timeStamp: "123"
-      },
-      {
-        id: 8,
-        status: "completed",
-        content: "should go to deleted",
-        timeStamp: "124"
-      },
-      {
-        id: 9,
-        status: "not completed",
-        content: "should go to completed",
-        timeStamp: "123"
-      },
-      {
-        id: 10,
-        status: "completed",
-        content: "should go to not trash",
-        timeStamp: "1240000"
-      },
-      {
-        id: 11,
-        status: "deleted",
-        content: "should be deleted",
-        timeStamp: "124"
-      }
-    ];
-    for (let i = 0; i < todos.length; i++) {
-      ToDoActions.addToDo(todos[i]);
-      console.log(todos[i], "tab bar nav todo");
-    }
-  }
+
   render() {
     const { dispatch, tabBarState } = this.props;
     return (

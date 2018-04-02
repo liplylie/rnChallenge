@@ -17,6 +17,7 @@ import ToDoEntry from './ToDoListEntries.js';
 import * as ToDoActions from "../../../actions/toDoAction";
 import * as DeleteActions from "../../../actions/deleteAction";
 import { bindActionCreators } from "redux";
+import { firebase, app, facebookProvider, firebaseDB } from "../../../firebase";
 
 const styles = StyleSheet.create({
   container: {
@@ -60,13 +61,22 @@ const styles = StyleSheet.create({
 class Home extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      userId: ""
+    }
   }
   componentDidMount(){
     console.log(this.props, 'home props')
   }
 
+  componentWillReceiveProps(nextProps){
+    console.log(nextProps, 'home next props')
+    this.setState({
+      userId: nextProps.Auth.userId
+    })
+  }
+
   handleSubmit(text){
-    //console.log(text.target.val, 'press')
     const { todos } = this.props.todos
     const { ToDoActions } = this.props
     let id = todos[todos.length - 1].id + 1
@@ -78,6 +88,21 @@ class Home extends Component {
       content: content,
       timeStamp: "1240010"
     }
+    console.log(this.state, 'home state' )
+    let userTodos = firebaseDB.ref("/users/" + this.state.userId + "/todos")
+        userTodos.once("value").then(
+          snapshot => {
+            if (snapshot.val()) {
+              console.log(snapshot.val(), "todos from home ");
+              let todos = snapshot.val();
+              todos.push(todo)
+              userTodos.set(todos)
+            } 
+          },
+          errorObject => {
+            console.log("The read failed: " + errorObject.code);
+          }
+        );
     ToDoActions.addToDo(todo)
     this.clearText()
     
@@ -117,7 +142,8 @@ class Home extends Component {
 
 const mapStateToProps = store =>{
   return {
-    todos: store.addTodo
+    todos: store.addTodo,
+    Auth: store.Log
   }
 }
 
