@@ -20,6 +20,10 @@ class ToDoList extends Component {
     super()
   }
 
+  componentDidMount(){
+    console.log("home todo list lands again", this.props)
+  }
+
   formatAMPM(date) {
     var hours = date[0] + date[1];
     var minutes = date[3] + date[4];
@@ -46,7 +50,6 @@ class ToDoList extends Component {
     }
   }
     this.forceUpdate()
-
     todo.change = changeStatus;
     ToDoActions.changeTodoStatus(todo);
 

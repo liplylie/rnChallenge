@@ -77,6 +77,15 @@ class Home extends Component {
     })
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log(nextProps, 'next props shouls')
+    return true
+  // If shouldComponentUpdate returns false, 
+  // then render() will be completely skipped until the next state change.
+  // In addition, componentWillUpdate and componentDidUpdate will not be called. 
+  
+}
+
 
 
   handleSubmit(text){
@@ -139,7 +148,7 @@ class Home extends Component {
         {todos.map((todo, i)=>{ 
           console.log(todo, 'todo in home look')
           if (todo.status !== "deleted"){
-            return <ToDoEntry todo={todo} key={i} index={i} /> 
+            return <ToDoEntry todo={todo} key={i} index={i} status={todo.status}/> 
           }
         })}
       </KeyboardAvoidingView>
