@@ -6,7 +6,8 @@ import {
   View,
   TouchableHighlight,
   TouchableOpacity,
-  Text
+  Text,
+  Image
 } from "react-native";
 import Swipeout from "react-native-swipeout";
 import * as ToDoActions from "../../../actions/toDoAction";
@@ -35,19 +36,24 @@ class ToDoList extends Component {
       }
     ];
 
-    return (
+        return (
       <View>
         <Swipeout right={swipeoutBtns} style={styles.toDoEntry}>
-          <View style={(styles.padding, styles.border)}>
+          <View style={(styles.padding, styles.border, styles.columns)}>
             <TouchableOpacity
-              onPress={e => this.changeStatus(todo, "not completed")}
+              onPress={() => this.changeStatus(todo, "not completed")}
               style={styles.red}
             >
-              <Text>change status</Text>
+              <Image
+                source={require("../../../TabPhotos/add.png")}
+                style={styles.image}
+              />
             </TouchableOpacity>
             <Text style={styles.toDoEntry}>
-              {todo.content} {todo.timeStamp}
-              <Text style={styles.status}>{todo.status}</Text>
+              {todo.content} {"\n"}
+              <Text style={styles.time}>
+                {new Date(parseInt(todo.timeStamp)).toUTCString()}
+              </Text>
             </Text>
           </View>
         </Swipeout>
@@ -60,11 +66,13 @@ const styles = StyleSheet.create({
   toDoEntry: {
     height: 80,
     backgroundColor: "white",
-    flexDirection: "column"
+    padding: 14,
+    margin: 1,
+    fontSize: 16
   },
-  status: {
-    fontSize: 18,
-    color: "red",
+  time: {
+    fontSize: 10,
+    color: "green",
     alignItems: "flex-end"
   },
   padding: {
@@ -75,8 +83,16 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: "gray"
   },
-  red: {
-    backgroundColor: "red"
+  columns: {
+    flexDirection: "row",
+    alignItems: "center",
+    textAlign: "center"
+  },
+  image: {
+    width: 20,
+    height: 20,
+    margin: 3,
+    bottom: 10
   }
 });
 

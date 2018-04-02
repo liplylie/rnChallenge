@@ -71,22 +71,10 @@ class Home extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    console.log(nextProps, 'home next props')
     this.setState({
       userId: nextProps.Auth.userId
     })
   }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    console.log(nextProps, 'next props shouls')
-    return true
-  // If shouldComponentUpdate returns false, 
-  // then render() will be completely skipped until the next state change.
-  // In addition, componentWillUpdate and componentDidUpdate will not be called. 
-  
-}
-
-
 
   handleSubmit(text){
     const { todos } = this.props.todos
@@ -95,7 +83,6 @@ class Home extends Component {
     if (todos.length > 0){
       id = todos[todos.length - 1].id + 1
     }
-    console.log(id, 'id home')
     let content = text.nativeEvent.text
     let todo = {
       id: id,
