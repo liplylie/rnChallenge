@@ -4,7 +4,6 @@ import {
   Image,
   StyleSheet,
   Text,
-  Button,
   AlertIOS,
   TouchableOpacity
 } from "react-native";
@@ -12,6 +11,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import LogIn from "./LogIn";
 import SignUp from "./SignUp";
+import Button from "react-native-button";
 
 import * as AuthActions from "../../../actions/logActions.js";
 
@@ -21,7 +21,9 @@ class DefaultPage extends PureComponent {
     this.state = {
       signUp: false,
       logIn: false
-    }
+    };
+    this.goBack = this.goBack.bind(this)
+    this.goBackSignUp = this.goBackSignUp.bind(this)
   }
 
   componentWillMount() {
@@ -47,6 +49,19 @@ class DefaultPage extends PureComponent {
     });
   }
 
+  goBack(){
+    this.setState({
+      logIn: false
+    })
+  }
+
+  goBackSignUp(){
+    console.log(this.props, 'go back')
+    this.setState({
+      signUp: false
+    })
+  }
+
   // magicLogIn() {
   //   const { actions, navigation } = this.props;
   //   //const { navigation } = this.props.navigation;
@@ -67,25 +82,47 @@ class DefaultPage extends PureComponent {
     const { authorized, actions } = this.props;
 
     if (this.state.logIn) {
-      return <LogIn />;
+      return <LogIn goBack={this.goBack}/>;
     } else if (this.state.signUp) {
-      return <SignUp />;
+      return <SignUp goBack={this.goBackSignUp}/>;
     } else {
       return (
         <View style={styles.container}>
-          <Text> To Do List </Text>
           <Image
             style={styles.image}
             resizeMethod="resize"
             resizeMode="contain"
             source={require("../../../TabPhotos/logo.png")}
           />
-          <TouchableOpacity style={styles.button} onPress={() => this.logIn()}>
-            <Text> Log In</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => this.signUp()}>
-            <Text> Sign Up</Text>
-          </TouchableOpacity>
+          <Button
+            containerStyle={{
+              padding: 10,
+              height: 45,
+              overflow: "hidden",
+              borderRadius: 4,
+              backgroundColor: "khaki",
+              margin: 3
+            }}
+            disabledContainerStyle={{ backgroundColor: "grey" }}
+            style={{ fontSize: 20, color: "black" }}
+            onPress={() => this.logIn()}
+          >
+            Login
+          </Button>
+          <Button
+            containerStyle={{
+              padding: 10,
+              height: 45,
+              overflow: "hidden",
+              borderRadius: 4,
+              backgroundColor: "khaki"
+            }}
+            disabledContainerStyle={{ backgroundColor: "grey" }}
+            style={{ fontSize: 20, color: "black" }}
+            onPress={() => this.signUp()}
+          >
+            Sign Up
+          </Button>
         </View>
       );
     }
@@ -115,7 +152,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#ecf0f1"
   },
   image: {
-    flex: 0.3
+    flex: 0.3,
+    bottom: 10
   },
   button: {
     alignItems: "center",

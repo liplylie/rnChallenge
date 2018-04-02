@@ -103,6 +103,11 @@ class LogIn extends Component {
     // );
   }
 
+  goBack(){
+    console.log(this.props, 'go back')
+    this.props.goBack()
+  }
+
   onLogin() {
     const { email, password } = this.state;
     app
@@ -144,10 +149,24 @@ class LogIn extends Component {
             backgroundColor: "white"
           }}
           disabledContainerStyle={{ backgroundColor: "grey" }}
-          style={{ fontSize: 20, color: "green" }}
+          style={{ fontSize: 20, color: "black" }}
           onPress={() => this.onLogin()}
         >
           Login
+        </Button>
+        <Button
+          containerStyle={{
+            padding: 10,
+            height: 45,
+            overflow: "hidden",
+            borderRadius: 4,
+            backgroundColor: "white"
+          }}
+          disabledContainerStyle={{ backgroundColor: "grey" }}
+          style={{ fontSize: 20, color: "green" }}
+          onPress={() => this.goBack()}
+        >
+          Go Back
         </Button>
       </View>
     );

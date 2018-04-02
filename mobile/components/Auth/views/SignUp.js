@@ -98,6 +98,11 @@ class SignUp extends Component {
       }
   }
 
+  goBack(){
+    console.log(this.props, 'go back sign ')
+    this.props.goBack()
+  }
+
   validateEmail(email){
     console.log(validator.validate(email), 'validatoin')
     return validator.validate(email)
@@ -144,10 +149,25 @@ class SignUp extends Component {
          <Button
           containerStyle={{padding:10, height:45, overflow:'hidden', borderRadius:4, backgroundColor: 'white'}}
           disabledContainerStyle={{backgroundColor: 'grey'}}
-          style={{fontSize: 20, color: 'green'}}
+          style={{fontSize: 20, color: 'black'}}
           onPress={()=>this.onSignUp()}>
           SignUp
         </Button>
+        <Button
+          containerStyle={{
+            padding: 10,
+            height: 45,
+            overflow: "hidden",
+            borderRadius: 4,
+            backgroundColor: "white"
+          }}
+          disabledContainerStyle={{ backgroundColor: "grey" }}
+          style={{ fontSize: 20, color: "green" }}
+          onPress={() => this.goBack()}
+        >
+          Go Back
+        </Button>
+
       </View>
     );
   }
