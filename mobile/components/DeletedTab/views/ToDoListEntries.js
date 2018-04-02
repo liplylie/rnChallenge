@@ -76,7 +76,7 @@ class ToDoList extends Component {
           </TouchableOpacity>
           <View style={(styles.padding, styles.border)}>
             <Text style={styles.toDoEntry}>
-              {todo.content} {todo.timeStamp}
+              {todo.content} {new Date(parseInt(todo.timeStamp)).toUTCString()}
               <Text style={styles.status}>{todo.status}</Text>
             </Text>
           </View>

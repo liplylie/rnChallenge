@@ -20,6 +20,16 @@ class ToDoList extends Component {
     super()
   }
 
+  formatAMPM(date) {
+    var hours = date[0] + date[1];
+    var minutes = date[3] + date[4];
+    var ampm = hours >= 12 ? "pm" : "am";
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    var strTime = hours + ":" + minutes + " " + ampm;
+    return strTime;
+  }
+
 
   changeStatus(todo, change) {
     console.log("changeSttus", todo);
@@ -45,7 +55,7 @@ class ToDoList extends Component {
 
   render() {
     const { todo } = this.props
-    console.log(todo, 'todo')
+    console.log(todo, 'todo home list')
     let swipeoutBtns = [
       {
         text: 'Delete',
@@ -59,12 +69,12 @@ class ToDoList extends Component {
         <Swipeout right={swipeoutBtns} style={styles.toDoEntry}>
           <View style={styles.padding, styles.border}>
             <TouchableOpacity
-              onPress={e => this.changeStatus(todo) }
+              onPress={() => this.changeStatus(todo) }
             >
               <Text>change status</Text>
             </TouchableOpacity>
              <Text style={styles.toDoEntry}>  
-            {todo.content} {todo.timeStamp}
+            {todo.content} {new Date(parseInt(todo.timeStamp)).toUTCString()}
             <Text style={styles.status}>
             {todo.status}
             </Text>

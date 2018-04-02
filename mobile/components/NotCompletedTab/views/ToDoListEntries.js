@@ -6,7 +6,8 @@ import {
   View,
   TouchableHighlight,
   TouchableOpacity,
-  Text
+  Text,
+  Image
 } from "react-native";
 import Swipeout from "react-native-swipeout";
 import * as ToDoActions from "../../../actions/toDoAction";
@@ -40,13 +41,16 @@ class ToDoList extends Component {
         <Swipeout right={swipeoutBtns} style={styles.toDoEntry}>
           <View style={(styles.padding, styles.border)}>
             <TouchableOpacity
-              onPress={e => this.changeStatus(todo, "completed")}
+              onPress={() => this.changeStatus(todo, "completed")}
               style={styles.red}
             >
-              <Text>change status</Text>
+              <Image 
+                source={require('../../../TabPhotos/notComplete.png')}
+                style={{width:20, height:20}}>
+              </Image>
             </TouchableOpacity>
             <Text style={styles.toDoEntry}>
-              {todo.content} {todo.timeStamp}
+              {todo.content} {new Date(parseInt(todo.timeStamp)).toUTCString()}
               <Text style={styles.status}>{todo.status}</Text>
             </Text>
           </View>

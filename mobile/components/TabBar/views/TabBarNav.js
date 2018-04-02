@@ -59,6 +59,7 @@ class TabBarNav extends Component {
                 content: "Hi! Try Adding A Todo or changing my status!",
                 timeStamp: firebase.database.ServerValue.TIMESTAMP
               }]
+               ToDoActions.addToDo(todos[0]);
               userTodos.update({
                 todos
               })

@@ -77,14 +77,16 @@ class Home extends Component {
     })
   }
 
+
+
   handleSubmit(text){
-    const { todos } = this.props.todos.todos
+    const { todos } = this.props.todos
     const { ToDoActions } = this.props
     let id = 0
     if (todos.length > 0){
       id = todos[todos.length - 1].id + 1
     }
-    console.log(id, 'id')
+    console.log(id, 'id home')
     let content = text.nativeEvent.text
     let todo = {
       id: id,
