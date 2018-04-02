@@ -1,5 +1,7 @@
 ### rnChallenge
 To Do list with Firebase Auth and DB
+Sample: 
+[![ToDoApp](https://img.youtube.com/vi/BImUVuqNz_Y/0.jpg)](https://www.youtube.com/watch?v=BImUVuqNz_Y "ToDoApp")
 
 ## Table of Contents
 - [TechStack](#tech-stack)
@@ -12,7 +14,6 @@ To Do list with Firebase Auth and DB
 - React Native 
 - React Navigation
 - Firebase Auth and Database
-- 
 
 ## start 
 - git clone 
