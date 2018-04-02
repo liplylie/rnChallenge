@@ -81,6 +81,8 @@ class SignUp extends Component {
     const { email, password, passwordTwo } = this.state;
     if (password !== passwordTwo){
        Alert.alert("Passwords do not match");
+    } else if (password.length < 6){
+       Alert.alert("Password needs to be more than 6 characters");
     } else if (!this.validateEmail(email)){
       Alert.alert("Please enter valid email");
     } else {
