@@ -15,6 +15,8 @@ import {
 import Button from "react-native-button"
 import { connect } from "react-redux";
 import Spinner from "react-native-spinkit";
+import { bindActionCreators } from "redux";
+import * as AuthActions from "../../../actions/logActions.js";
 
 const styles = StyleSheet.create({
   container: {
@@ -74,8 +76,19 @@ class LogIn extends Component {
   
   onLogin() {
     const { username, password } = this.state;
-
-    Alert.alert('Credentials', `${username} + ${password}`);
+    const { actions, navigation } = this.props;
+    //const { navigation } = this.props.navigation;
+    actions.Login({
+      online: false,
+      name: "",
+      userId: "",
+      picture: "",
+      email: "",
+      error: null,
+      authorized: true,
+      authorizing: false
+    });
+    navigation.navigate("TabBar");
   }
 
   render() {
@@ -106,7 +119,17 @@ class LogIn extends Component {
     );
   }
 }
+const mapState = state => {
+  return {
+    authorizing: state.Auth.authorizing,
+    authorized: state.Auth.authorized
+  };
+};
 
+const mapDispatch = dispatch => {
+  return {
+    actions: bindActionCreators(AuthActions, dispatch)
+  };
+};
 
-
-export default connect(null, null)(LogIn);
+export default connect(mapState, mapDispatch)(LogIn);

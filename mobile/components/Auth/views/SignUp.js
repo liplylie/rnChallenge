@@ -145,17 +145,17 @@ class SignUp extends Component {
   }
 }
 
-const loginState = state => {
+const mapState = state => {
   return {
     authorizing: state.Auth.authorizing,
     authorized: state.Auth.authorized
   };
 };
 
-const loginDispatch = dispatch => {
+const mapDispatch = dispatch => {
   return {
     actions: bindActionCreators(AuthActions, dispatch)
   };
 };
 
-export default connect(loginState, loginDispatch)(SignUp);
+export default connect(mapState, mapDispatch)(SignUp);
