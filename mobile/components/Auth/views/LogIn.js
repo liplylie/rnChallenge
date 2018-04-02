@@ -1,74 +1,112 @@
-import React, { Component } from 'react';
-import { List, ListItem } from 'react-native-elements'
+import React, { Component } from "react";
+import { List, ListItem } from "react-native-elements";
 import {
   Platform,
   StyleSheet,
   Text,
   View,
   Image,
-  ScrollView, 
+  ScrollView,
   Header,
-} from 'react-native';
-import { connect } from 'react-redux';
-import Spinner from 'react-native-spinkit';
+  TextInput,
+  TouchableHighlight,
+  Alert, 
+} from "react-native";
+import Button from "react-native-button"
+import { connect } from "react-redux";
+import Spinner from "react-native-spinkit";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: 'red'
+    justifyContent: 'center',
+    backgroundColor: '#ecf0f1',
   },
-  title:{
-    flexDirection: 'column',
+  input: {
+    width: 200,
+    height: 44,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: 'black',
+    marginBottom: 10,
+  },
+  button: {
+    height: 40,
+    width: 200
+  },
+  title: {
+    flexDirection: "column",
     margin: 10
   },
   image: {
     width: 200,
-    height: 30,
+    height: 30
   },
-  header: { 
+  header: {
     height: 70,
-    backgroundColor: 'white'
-  }, 
+    backgroundColor: "white"
+  },
   collection: {
-    backgroundColor: 'skyblue',
-    flex:1,
+    backgroundColor: "skyblue",
+    flex: 1
   },
-  spinnerContainer:{
+  spinnerContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center"
   },
-  spinner:{
-    justifyContent: 'center',
-    alignItems: 'center',
+  spinner: {
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
 
 class LogIn extends Component {
   constructor(props) {
     super(props);
+    
     this.state = {
-      input: '',
-      results: []
-    }
+      username: '',
+      password: '',
+    };
+  }
+  
+  onLogin() {
+    const { username, password } = this.state;
+
+    Alert.alert('Credentials', `${username} + ${password}`);
   }
 
   render() {
-      return (
-        <View style={styles.spinnerContainer}>
-          <Spinner type='FadingCircle' style={styles.spinner}/>
-          <Text> Log In </Text>
-        </View>
-      )
-    }
-  }
-
-
-const mapStateToProps = (store) =>{
-  return {
+    return (
+      <View style={styles.container}>
+        <TextInput
+          value={this.state.username}
+          onChangeText={(username) => this.setState({ username })}
+          placeholder={'Username'}
+          style={styles.input}
+        />
+        <TextInput
+          value={this.state.password}
+          onChangeText={(password) => this.setState({ password })}
+          placeholder={'Password'}
+          secureTextEntry={true}
+          style={styles.input}
+        />
+        
+         <Button
+          containerStyle={{padding:10, height:45, overflow:'hidden', borderRadius:4, backgroundColor: 'white'}}
+          disabledContainerStyle={{backgroundColor: 'grey'}}
+          style={{fontSize: 20, color: 'green'}}
+          onPress={()=>this.onLogin()}>
+          Login
+        </Button>
+      </View>
+    );
   }
 }
 
 
-export default connect(mapStateToProps, null)(LogIn)
+
+export default connect(null, null)(LogIn);

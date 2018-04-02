@@ -24,13 +24,13 @@ class DefaultPage extends Component {
   }
 
   signUp() {
-    const { navigation } = this.props.navigation;
+    const { navigation } = this.props;
     navigation.navigate("SignUp");
   }
 
   logIn() {
-    //const { navigation } = this.props.navigation;
-    this.props.navigation.navigate("LogIn");
+    const { navigation } = this.props
+    navigation.navigate("LogIn");
   }
 
   magicLogIn() {
@@ -61,16 +61,19 @@ class DefaultPage extends Component {
           resizeMode="contain"
           source={require("../../../TabPhotos/logo.png")}
         />
-        <TouchableOpacity title="click" style={styles.button} onPress={() => this.magicLogIn()}>
+        <TouchableOpacity
+          title="click"
+          style={styles.button}
+          onPress={() => this.magicLogIn()}
+        >
           <Text> Magic Log In</Text>
         </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.logIn()}>
-            <Text> Log In</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => this.signUp()}>
-            <Text> Sign Up</Text>
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => this.logIn()}>
+          <Text> Log In</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => this.signUp()}>
+          <Text> Sign Up</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -92,19 +95,20 @@ const loginDispatch = dispatch => {
 export default connect(loginState, loginDispatch)(DefaultPage);
 
 const styles = StyleSheet.create({
-  image: {
-    height: 200,
-    width: 200
-  },
   container: {
-    alignItems: "center",
-    backgroundColor: "red"
+     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#ecf0f1',
+  },
+  image: {
+    flex: .3
   },
   button: {
-    alignItems: 'center',
-    backgroundColor: '#DDDDDD',
+    alignItems: "center",
+    backgroundColor: "#DDDDDD",
     padding: 10,
     height: 80,
     width: 200
-  },
+  }
 });
