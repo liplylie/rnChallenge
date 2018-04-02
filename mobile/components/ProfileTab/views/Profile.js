@@ -13,6 +13,7 @@ import {
 import { connect } from "react-redux";
 import Spinner from "react-native-spinkit";
 import * as AuthActions from "../../../actions/logActions.js";
+import * as ToDoActions from "../../../actions/toDoAction.js";
 import { bindActionCreators } from "redux";
 import { firebase, app, facebookProvider } from "../../../firebase";
 import App from "../../App"
@@ -65,16 +66,14 @@ class Profile extends Component {
   }
 
   logOut() {
-    const { actions } = this.props;
+    const { actions, ToDoActions } = this.props;
     console.log('logout')
     app
       .auth()
       .signOut()
       .then(user => {
-        this.setState({
-          logOut: true
-        })
         actions.LogOut(false);
+        ToDoActions.DeleteAll()
       });
   }
 
@@ -98,7 +97,9 @@ class Profile extends Component {
 
 const mapDispatch = dispatch => {
   return {
-    actions: bindActionCreators(AuthActions, dispatch)
+    dispatch,
+    actions: bindActionCreators(AuthActions, dispatch),
+    ToDoActions: bindActionCreators(ToDoActions, dispatch)
   };
 };
 

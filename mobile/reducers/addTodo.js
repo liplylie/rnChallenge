@@ -25,6 +25,10 @@ const addTodo = (state = initialState, action) => {
 				return todo.id !== action.payload.id;
 			})
 		});
+	} else if (action.type === "DELETE_ALL_TODOS"){
+		return Object.assign({}, state, {
+			todos: []
+		});
 	}
 	return state;
 };

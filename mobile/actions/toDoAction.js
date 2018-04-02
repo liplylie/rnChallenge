@@ -18,3 +18,9 @@ export function DeleteToDo(todo){
 	payload: todo
 	}
 }
+
+export function DeleteAll(){
+	return{
+		type: "DELETE_ALL_TODOS"
+	}
+}
