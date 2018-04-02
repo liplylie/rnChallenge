@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PureComponent } from 'react'
 import { addNavigationHelpers } from 'react-navigation'
 import { AuthNavigator } from '../navigationConfig'
 import { Image } from 'react-native'
@@ -14,7 +14,7 @@ const middleware = createReactNavigationReduxMiddleware(
 );
 const addListener = createReduxBoundAddListener("root");
 
-class AuthNav extends Component {
+class AuthNav extends PureComponent {
 
   render() {
     const { dispatch, AuthState } = this.props

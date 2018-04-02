@@ -115,7 +115,6 @@ class SignUp extends Component {
       authorized: true,
       authorizing: false
     });
-    navigation.navigate("TabBar");
   }
 
   render() {

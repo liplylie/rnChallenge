@@ -28,6 +28,7 @@ const logReducer = (state=initialState, action) => {
       })
     }
     case 'USER_LOGOUT': {
+      console.log('user logout')
       return Object.assign({}, state, {
         online: action.payload,
         name: '',
@@ -36,6 +37,7 @@ const logReducer = (state=initialState, action) => {
         email: '',
         error: null,
         authorized: false,
+        authorizing: false
       });
     }
      default: {

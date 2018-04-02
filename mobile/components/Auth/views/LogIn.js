@@ -18,6 +18,7 @@ import Spinner from "react-native-spinkit";
 import { bindActionCreators } from "redux";
 import * as AuthActions from "../../../actions/logActions.js";
 import { firebase, app, facebookProvider } from "../../../firebase";
+import { NavigationActions } from "react-navigation";
 
 const styles = StyleSheet.create({
   container: {
@@ -75,6 +76,9 @@ class LogIn extends Component {
     };
   }
 
+  componentWillMount(){
+    console.log('here in login')
+  }
   logIn() {
     const { email, password } = this.state;
     const { actions, navigation } = this.props;
@@ -89,7 +93,14 @@ class LogIn extends Component {
       authorized: true,
       authorizing: false
     });
-    navigation.navigate("TabBar");
+    //navigation.navigate("TabBar")
+    // navigation.dispatch(
+    //   NavigationActions.reset({
+    //     index: 0,
+    //     key: null,
+    //     actions: [NavigationActions.navigate({ routeName: "DefaultPage" })]
+    //   })
+    // );
   }
 
   onLogin() {

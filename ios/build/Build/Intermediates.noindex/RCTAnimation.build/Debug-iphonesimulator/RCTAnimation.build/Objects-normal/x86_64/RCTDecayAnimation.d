@@ -1,0 +1,19 @@
+dependencies: \
+  /Users/jordandaniels/Desktop/yingChallenge/node_modules/react-native/Libraries/NativeAnimation/Drivers/RCTDecayAnimation.m \
+  /Users/jordandaniels/Desktop/yingChallenge/node_modules/react-native/Libraries/NativeAnimation/Drivers/RCTDecayAnimation.h \
+  /Users/jordandaniels/Desktop/yingChallenge/node_modules/react-native/Libraries/NativeAnimation/Drivers/RCTAnimationDriver.h \
+  /Users/jordandaniels/Desktop/yingChallenge/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridgeModule.h \
+  /Users/jordandaniels/Desktop/yingChallenge/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTDefines.h \
+  /Users/jordandaniels/Desktop/yingChallenge/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTConvert.h \
+  /Users/jordandaniels/Desktop/yingChallenge/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTAnimationType.h \
+  /Users/jordandaniels/Desktop/yingChallenge/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBorderStyle.h \
+  /Users/jordandaniels/Desktop/yingChallenge/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTLog.h \
+  /Users/jordandaniels/Desktop/yingChallenge/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTAssert.h \
+  /Users/jordandaniels/Desktop/yingChallenge/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTUtils.h \
+  /Users/jordandaniels/Desktop/yingChallenge/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTPointerEvents.h \
+  /Users/jordandaniels/Desktop/yingChallenge/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTTextDecorationLineType.h \
+  /Users/jordandaniels/Desktop/yingChallenge/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/Yoga.h \
+  /Users/jordandaniels/Desktop/yingChallenge/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGEnums.h \
+  /Users/jordandaniels/Desktop/yingChallenge/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGMacros.h \
+  /Users/jordandaniels/Desktop/yingChallenge/node_modules/react-native/Libraries/NativeAnimation/Nodes/RCTValueAnimatedNode.h \
+  /Users/jordandaniels/Desktop/yingChallenge/node_modules/react-native/Libraries/NativeAnimation/Nodes/RCTAnimatedNode.h

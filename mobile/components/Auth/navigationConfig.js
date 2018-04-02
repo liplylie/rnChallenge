@@ -6,9 +6,9 @@ import TabBar from '../App'
 
 const routeConfig = {
   DefaultPage: { screen: DefaultPage },
-  LogIn: { screen: LogIn},
-  SignUp: { screen: SignUp},
-  TabBar: {screen: TabBar}
+  // LogIn: { screen: LogIn},
+  // SignUp: { screen: SignUp},
+  // TabBar: {screen: TabBar}
 }
 
 const stackNavigatorConfig = {

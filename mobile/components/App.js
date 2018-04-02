@@ -1,15 +1,16 @@
-import React, { Component } from "react";
+import React, { Component, PureComponent } from "react";
 import TabBarNav from "./TabBar/views/TabBarNav";
 import { connect } from "react-redux";
 import { View, Text, Image, StyleSheet } from "react-native";
 import { bindActionCreators } from "redux";
 import AuthNav from "./Auth/views/AuthNav.js";
+
 import * as AuthActions from "../actions/logActions.js";
 import * as ToDoActions from "../actions/toDoAction.js";
 import Spinner from "react-native-spinkit";
 import { app, firebaseDB } from "../firebase";
 
-class App extends Component {
+class App extends PureComponent {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -19,6 +20,7 @@ class App extends Component {
 
 	render() {
 		const { authorized, authorizing } = this.props;
+		console.log('app is here', this.props)
 		if (!authorized) {
 			return (
 				<View style={styles.container}>
