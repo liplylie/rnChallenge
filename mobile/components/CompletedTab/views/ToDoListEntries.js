@@ -36,7 +36,7 @@ class ToDoList extends Component {
       }
     ];
 
-        return (
+    return (
       <View>
         <Swipeout right={swipeoutBtns} style={styles.toDoEntry}>
           <View style={(styles.padding, styles.border, styles.columns)}>

@@ -107,7 +107,6 @@ class Home extends Component {
         );
     ToDoActions.addToDo(todo)
     this.clearText()
-    
   }
 
    clearText(){

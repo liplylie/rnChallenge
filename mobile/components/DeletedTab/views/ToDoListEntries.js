@@ -7,7 +7,8 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   Text,
-  Image
+  Image,
+  Alert
 } from "react-native";
 import Swipeout from "react-native-swipeout";
 import * as ToDoActions from "../../../actions/toDoAction";
@@ -25,6 +26,18 @@ class ToDoList extends Component {
     const { ToDoActions } = this.props;
     todo.change = changeStatus;
     ToDoActions.changeTodoStatus(todo);
+  }
+
+  confirmDelete(todo) {
+    Alert.alert(
+      'Are you sure you want to delete this?',
+      'Yes or No?',
+      [
+      {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+      {text: 'Yes', onPress: () => this.deleteTodo(todo)},
+      ],
+      { cancelable: false }
+    )
   }
 
   deleteTodo(todo) {
@@ -59,11 +72,11 @@ class ToDoList extends Component {
       {
         text: "Delete",
         backgroundColor: "red",
-        onPress: () => this.deleteTodo(todo)
+        onPress: () => this.confirmDelete(todo)
       }
     ];
 
-        return (
+    return (
       <View>
         <Swipeout right={swipeoutBtns} style={styles.toDoEntry}>
           <View style={(styles.padding, styles.border, styles.columns)}>

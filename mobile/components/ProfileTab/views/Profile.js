@@ -17,6 +17,7 @@ import * as ToDoActions from "../../../actions/toDoAction.js";
 import { bindActionCreators } from "redux";
 import { firebase, app, facebookProvider } from "../../../firebase";
 import App from "../../App"
+import Button from "react-native-button";
 
 const styles = StyleSheet.create({
   container: {
@@ -81,15 +82,21 @@ class Profile extends Component {
     console.log(this.props, 'profile props')
     return (
       <View style={styles.container}>
-        <TouchableOpacity
-          style={styles.top}
-          onPress={() => {
-            this.logOut();
-            //this.props.navigation.navigate("TabBar")
+         <Button
+          containerStyle={{
+            padding: 10,
+            height: 45,
+            overflow: "hidden",
+            borderRadius: 4,
+            backgroundColor: "white",
+            top: 30
           }}
+          disabledContainerStyle={{ backgroundColor: "grey" }}
+          style={{ fontSize: 20, color: "green" }}
+          onPress={() => this.logOut()}
         >
-          <Text>Log Out</Text>
-        </TouchableOpacity>
+          Log Out
+        </Button>
       </View>
     );
   }
