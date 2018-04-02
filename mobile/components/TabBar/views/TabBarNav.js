@@ -9,7 +9,8 @@ import {
 import * as ToDoActions from "../../../actions/toDoAction";
 import * as AuthActions from "../../../actions/logActions";
 import { bindActionCreators } from "redux";
-import { firebase, app, facebookProvider, firebaseDB } from "../../../firebase";
+import { app, facebookProvider, firebaseDB } from "../../../firebase";
+import firebase from "firebase";
 
 const middleware = createReactNavigationReduxMiddleware(
   "root",
@@ -29,7 +30,8 @@ class TabBarNav extends Component {
       if (user) {
         console.log(user, "user in TabBarNav");
 
-        let userTodos = firebaseDB.ref("/users/" + user.uid + "/todos");
+        let userTodos = firebaseDB.ref("/users/" + user.uid );
+        //let userPath = firebaseDB.ref("/users/" + user.uid)
         const { actions, navigation } = this.props;
         actions.Login({
           online: true,
@@ -45,12 +47,22 @@ class TabBarNav extends Component {
           snapshot => {
             if (snapshot.val()) {
               console.log(snapshot.val(), "todos from fb");
-              let todos = snapshot.val();
+              let todos = snapshot.val().todos;
               for (let i = 0; i < todos.length; i++) {
                 ToDoActions.addToDo(todos[i]);
                 console.log(todos[i], "tab bar nav todo");
               }
-            } 
+            } else {
+              let todos= [{
+                id: 0,
+                status: "not completed",
+                content: "Hi! Try Adding A Todo or changing my status!",
+                timeStamp: firebase.database.ServerValue.TIMESTAMP
+              }]
+              userTodos.update({
+                todos
+              })
+            }
           },
           errorObject => {
             console.log("The read failed: " + errorObject.code);

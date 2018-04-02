@@ -17,7 +17,8 @@ import ToDoEntry from './ToDoListEntries.js';
 import * as ToDoActions from "../../../actions/toDoAction";
 import * as DeleteActions from "../../../actions/deleteAction";
 import { bindActionCreators } from "redux";
-import { firebase, app, facebookProvider, firebaseDB } from "../../../firebase";
+import { app, facebookProvider, firebaseDB } from "../../../firebase";
+import firebase from "firebase";
 
 const styles = StyleSheet.create({
   container: {
@@ -77,16 +78,19 @@ class Home extends Component {
   }
 
   handleSubmit(text){
-    const { todos } = this.props.todos
+    const { todos } = this.props.todos.todos
     const { ToDoActions } = this.props
-    let id = todos[todos.length - 1].id + 1
+    let id = 0
+    if (todos.length > 0){
+      id = todos[todos.length - 1].id + 1
+    }
     console.log(id, 'id')
     let content = text.nativeEvent.text
     let todo = {
       id: id,
       status: "not completed",
       content: content,
-      timeStamp: "1240010"
+      timeStamp: firebase.database.ServerValue.TIMESTAMP
     }
     console.log(this.state, 'home state' )
     let userTodos = firebaseDB.ref("/users/" + this.state.userId + "/todos")
@@ -116,6 +120,7 @@ class Home extends Component {
 
   render() {
     const { todos } = this.props.todos
+    console.log(todos, 'home todos please')
     return (
       <ScrollView style={{backgroundColor: "snow"}} >
       <KeyboardAvoidingView >
@@ -130,6 +135,7 @@ class Home extends Component {
           onSubmitEditing={(text)=>this.handleSubmit(text)}
         />
         {todos.map((todo, i)=>{ 
+          console.log(todo, 'todo in home look')
           if (todo.status !== "deleted"){
             return <ToDoEntry todo={todo} key={i} index={i} /> 
           }
