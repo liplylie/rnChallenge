@@ -76,10 +76,10 @@ class LogIn extends Component {
     };
   }
 
-  componentWillMount(){
-    console.log('here in login')
-  }
   logIn() {
+    /* this method is called from this.onLogin(). 
+    This dispatches data to redux, and allows the user to go to the TabBarNav, which is the main app
+    */
     const { email, password } = this.state;
     const { actions, navigation } = this.props;
 
@@ -93,18 +93,10 @@ class LogIn extends Component {
       authorized: true,
       authorizing: false
     });
-    //navigation.navigate("TabBar")
-    // navigation.dispatch(
-    //   NavigationActions.reset({
-    //     index: 0,
-    //     key: null,
-    //     actions: [NavigationActions.navigate({ routeName: "DefaultPage" })]
-    //   })
-    // );
   }
 
   goBack(){
-    console.log(this.props, 'go back')
+    // this method causes the user to go back to the default page
     this.props.goBack()
   }
 

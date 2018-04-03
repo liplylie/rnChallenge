@@ -78,6 +78,9 @@ class SignUp extends Component {
   }
   
   onSignUp() {
+    /* this method checks the input forms and creates a user account if the
+      user does not have an account
+    */
     const { email, password, passwordTwo } = this.state;
     if (password !== passwordTwo){
        Alert.alert("Passwords do not match");
@@ -101,16 +104,19 @@ class SignUp extends Component {
   }
 
   goBack(){
-    console.log(this.props, 'go back sign ')
+    // this method causes the user to go back to the default page
     this.props.goBack()
   }
 
   validateEmail(email){
-    console.log(validator.validate(email), 'validatoin')
+    // this method checks if the email is a real email
     return validator.validate(email)
   };
 
   logIn() {
+    /* this method is called from this.state.signUp(). It takes the user to TabBarNav
+    by sending the appropriate data (authorized:true) to the redux store.
+    */
     const { actions, navigation } = this.props;
     actions.Login({
       online: false,

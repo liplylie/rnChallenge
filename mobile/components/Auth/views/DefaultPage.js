@@ -26,57 +26,39 @@ class DefaultPage extends PureComponent {
     this.goBackSignUp = this.goBackSignUp.bind(this)
   }
 
-  componentWillMount() {
-    //this.props.actions.getFBToken();
-    // const { navigation } = this.props
-    // navigation.navigate("DefaultPage")
-    console.log(this.props, "props DefaultPage");
-  }
-
   signUp() {
-    // const { navigation } = this.props;
-    // navigation.navigate("SignUp");
+    /* this method renders the sign up component when the user clicks on the log in button
+    */
     this.setState({
       signUp: true
     });
   }
 
   logIn() {
-    // const { navigation } = this.props
-    // navigation.navigate("LogIn");
+    /* this method renders the log in component when the user clicks on the log in button
+    */
     this.setState({
       logIn: true
     });
   }
 
   goBack(){
+     /* this method is passed down as a prop to the log incomponent. When clicked, it will
+    return the user back to the default page
+    */
     this.setState({
       logIn: false
     })
   }
 
   goBackSignUp(){
-    console.log(this.props, 'go back')
+    /* this method is passed down as a prop to the sign up component. When clicked, it will
+    return the user back to the default page
+    */ 
     this.setState({
       signUp: false
     })
   }
-
-  // magicLogIn() {
-  //   const { actions, navigation } = this.props;
-  //   //const { navigation } = this.props.navigation;
-  //   actions.Login({
-  //     online: false,
-  //     name: "",
-  //     userId: "",
-  //     picture: "",
-  //     email: "",
-  //     error: null,
-  //     authorized: true,
-  //     authorizing: false
-  //   });
-  //   navigation.navigate("TabBar");
-  // }
 
   render() {
     const { authorized, actions } = this.props;
