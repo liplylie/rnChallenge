@@ -20,31 +20,17 @@ class ToDoList extends Component {
     super();
   }
 
-  componentDidMount() {
-    console.log("home todo list lands again", this.props);
-  }
-
-  formatAMPM(date) {
-    var hours = date[0] + date[1];
-    var minutes = date[3] + date[4];
-    var ampm = hours >= 12 ? "pm" : "am";
-    hours = hours % 12;
-    hours = hours ? hours : 12;
-    var strTime = hours + ":" + minutes + " " + ampm;
-    return strTime;
-  }
-
   changeStatus(todo, change) {
-    console.log("changeSttus", todo);
+    /* this method changes the status [completed, not completed, deleted] of the todo.
+    It then updates the firebase DB and redux store of the changed status
+    */
     const { ToDoActions } = this.props;
     let changeStatus = "deleted";
     if (change !== "delete") {
       if (todo.status === "completed") {
         changeStatus = "not completed";
-        //todo.status = 'not completed'
       } else if (todo.status === "not completed") {
         changeStatus = "completed";
-        //todo.status = 'completed'
       }
     }
     let userTodos = firebaseDB.ref("/users/" + this.props.Auth.userId + "/todos");
@@ -74,7 +60,6 @@ class ToDoList extends Component {
 
   render() {
     const { todo } = this.props;
-    console.log(todo, "todo home list");
     let swipeoutBtns = [
       {
         text: "Delete",

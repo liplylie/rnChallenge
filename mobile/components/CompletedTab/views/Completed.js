@@ -55,7 +55,6 @@ class Completed extends Component {
   }
       
   render() {
-    console.log(this.props, 'completed props')
     const { todos } = this.props.todos
     return (
       <ScrollView style={{backgroundColor: "snow"}} >

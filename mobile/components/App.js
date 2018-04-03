@@ -19,8 +19,10 @@ class App extends PureComponent {
 	}
 
 	render() {
+		/* When the user is not authorized, the AuthNav/logInSection renders
+		When the user is authorized, the TabBarNav/mainApp renders
+		*/
 		const { authorized, authorizing } = this.props;
-		console.log('app is here', this.props)
 		if (!authorized) {
 			return (
 				<View style={styles.container}>
@@ -35,7 +37,7 @@ class App extends PureComponent {
 				</View>
 			);
 		} else {
-			return <TabBarNav id={this.state.id} todos={this.state.todos} />;
+			return <TabBarNav/>;
 		}
 	}
 }

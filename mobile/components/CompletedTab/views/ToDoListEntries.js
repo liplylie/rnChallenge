@@ -21,7 +21,9 @@ class ToDoList extends Component {
   }
 
   changeStatus(todo, changeStatus) {
-    console.log("changeSttus", todo);
+    /* this method changes the status [completed, not completed, deleted] of the todo.
+    It then updates the firebase DB and redux store of the changed status
+    */
     const { ToDoActions } = this.props;
     todo.change = changeStatus;
     let userTodos = firebaseDB.ref(
@@ -49,7 +51,6 @@ class ToDoList extends Component {
 
   render() {
     const { todo } = this.props;
-    console.log(todo, "todo");
     let swipeoutBtns = [
       {
         text: "Delete",
